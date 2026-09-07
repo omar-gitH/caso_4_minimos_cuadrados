@@ -1,0 +1,538 @@
+{
+  "MAM": [
+    {
+      "id": 1,
+      "especie": "Musaraña etrusca",
+      "masa": 0.002,
+      "metabolismo": 0.0282
+    },
+    {
+      "id": 2,
+      "especie": "Murciélago común",
+      "masa": 0.008,
+      "metabolismo": 0.0903
+    },
+    {
+      "id": 3,
+      "especie": "Ratón doméstico",
+      "masa": 0.025,
+      "metabolismo": 0.3829
+    },
+    {
+      "id": 4,
+      "especie": "Hámster",
+      "masa": 0.12,
+      "metabolismo": 0.6852
+    },
+    {
+      "id": 5,
+      "especie": "Rata parda",
+      "masa": 0.35,
+      "metabolismo": 1.6122
+    },
+    {
+      "id": 6,
+      "especie": "Ardilla",
+      "masa": 0.6,
+      "metabolismo": 1.9746
+    },
+    {
+      "id": 7,
+      "especie": "Conejo",
+      "masa": 2.2,
+      "metabolismo": 6.8788
+    },
+    {
+      "id": 8,
+      "especie": "Gato doméstico",
+      "masa": 4.5,
+      "metabolismo": 8.4547
+    },
+    {
+      "id": 9,
+      "especie": "Zorro gris",
+      "masa": 6.5,
+      "metabolismo": 16.1522
+    },
+    {
+      "id": 10,
+      "especie": "Perro mediano",
+      "masa": 20.0,
+      "metabolismo": 22.5014
+    },
+    {
+      "id": 11,
+      "especie": "Cabra",
+      "masa": 45.0,
+      "metabolismo": 92.6861
+    },
+    {
+      "id": 12,
+      "especie": "Oveja",
+      "masa": 65.0,
+      "metabolismo": 56.1758
+    },
+    {
+      "id": 13,
+      "especie": "Ser humano",
+      "masa": 70.0,
+      "metabolismo": 101.4074
+    },
+    {
+      "id": 14,
+      "especie": "Cerdo",
+      "masa": 110.0,
+      "metabolismo": 85.0997
+    },
+    {
+      "id": 15,
+      "especie": "Ciervo",
+      "masa": 150.0,
+      "metabolismo": 192.5287
+    },
+    {
+      "id": 16,
+      "especie": "León",
+      "masa": 190.0,
+      "metabolismo": 131.6924
+    },
+    {
+      "id": 17,
+      "especie": "Ñu",
+      "masa": 250.0,
+      "metabolismo": 179.1076
+    },
+    {
+      "id": 18,
+      "especie": "Caballo",
+      "masa": 500.0,
+      "metabolismo": 374.0239
+    },
+    {
+      "id": 19,
+      "especie": "Vaca",
+      "masa": 650.0,
+      "metabolismo": 495.4232
+    },
+    {
+      "id": 20,
+      "especie": "Jirafa",
+      "masa": 900.0,
+      "metabolismo": 660.409
+    },
+    {
+      "id": 21,
+      "especie": "Rinoceronte blanco",
+      "masa": 2300.0,
+      "metabolismo": 974.2937
+    },
+    {
+      "id": 22,
+      "especie": "Elefante africano",
+      "masa": 5000.0,
+      "metabolismo": 1941.7704
+    }
+  ],
+  "AVE": [
+    {
+      "id": 23,
+      "especie": "Colibrí",
+      "masa": 0.003,
+      "metabolismo": 0.0659
+    },
+    {
+      "id": 24,
+      "especie": "Gorrión",
+      "masa": 0.03,
+      "metabolismo": 0.3657
+    },
+    {
+      "id": 25,
+      "especie": "Canario",
+      "masa": 0.02,
+      "metabolismo": 0.1795
+    },
+    {
+      "id": 26,
+      "especie": "Golondrina",
+      "masa": 0.018,
+      "metabolismo": 0.2184
+    },
+    {
+      "id": 27,
+      "especie": "Codorniz",
+      "masa": 0.18,
+      "metabolismo": 1.2467
+    },
+    {
+      "id": 28,
+      "especie": "Paloma",
+      "masa": 0.3,
+      "metabolismo": 3.0331
+    },
+    {
+      "id": 29,
+      "especie": "Loro gris",
+      "masa": 0.45,
+      "metabolismo": 3.278
+    },
+    {
+      "id": 30,
+      "especie": "Cuervo",
+      "masa": 0.55,
+      "metabolismo": 1.9823
+    },
+    {
+      "id": 31,
+      "especie": "Pato",
+      "masa": 1.2,
+      "metabolismo": 4.9026
+    },
+    {
+      "id": 32,
+      "especie": "Gallina",
+      "masa": 2.0,
+      "metabolismo": 8.6395
+    },
+    {
+      "id": 33,
+      "especie": "Halcón peregrino",
+      "masa": 0.9,
+      "metabolismo": 4.4409
+    },
+    {
+      "id": 34,
+      "especie": "Ganso",
+      "masa": 4.0,
+      "metabolismo": 11.2199
+    },
+    {
+      "id": 35,
+      "especie": "Águila real",
+      "masa": 6.0,
+      "metabolismo": 48.3774
+    },
+    {
+      "id": 36,
+      "especie": "Pavo",
+      "masa": 8.0,
+      "metabolismo": 27.7096
+    },
+    {
+      "id": 37,
+      "especie": "Albatros",
+      "masa": 9.0,
+      "metabolismo": 22.6612
+    },
+    {
+      "id": 38,
+      "especie": "Cóndor andino",
+      "masa": 12.0,
+      "metabolismo": 16.9653
+    },
+    {
+      "id": 39,
+      "especie": "Cisne",
+      "masa": 13.0,
+      "metabolismo": 21.3292
+    },
+    {
+      "id": 40,
+      "especie": "Pelícano",
+      "masa": 7.0,
+      "metabolismo": 35.6058
+    },
+    {
+      "id": 41,
+      "especie": "Ñandú",
+      "masa": 25.0,
+      "metabolismo": 60.8924
+    },
+    {
+      "id": 42,
+      "especie": "Emú",
+      "masa": 40.0,
+      "metabolismo": 87.9224
+    },
+    {
+      "id": 43,
+      "especie": "Casuario",
+      "masa": 55.0,
+      "metabolismo": 75.5477
+    },
+    {
+      "id": 44,
+      "especie": "Avestruz",
+      "masa": 100.0,
+      "metabolismo": 137.8123
+    }
+  ],
+  "REP": [
+    {
+      "id": 45,
+      "especie": "Gecko",
+      "masa": 0.01,
+      "metabolismo": 0.0142
+    },
+    {
+      "id": 46,
+      "especie": "Anolis",
+      "masa": 0.02,
+      "metabolismo": 0.0633
+    },
+    {
+      "id": 47,
+      "especie": "Lagartija",
+      "masa": 0.06,
+      "metabolismo": 0.062
+    },
+    {
+      "id": 48,
+      "especie": "Salamanquesa",
+      "masa": 0.03,
+      "metabolismo": 0.0194
+    },
+    {
+      "id": 49,
+      "especie": "Tortuga pequeña",
+      "masa": 0.5,
+      "metabolismo": 0.6888
+    },
+    {
+      "id": 50,
+      "especie": "Serpiente de maíz",
+      "masa": 0.8,
+      "metabolismo": 0.3737
+    },
+    {
+      "id": 51,
+      "especie": "Camaleón",
+      "masa": 1.2,
+      "metabolismo": 1.0236
+    },
+    {
+      "id": 52,
+      "especie": "Culebra de agua",
+      "masa": 1.6,
+      "metabolismo": 0.831
+    },
+    {
+      "id": 53,
+      "especie": "Iguana verde",
+      "masa": 4.0,
+      "metabolismo": 3.2186
+    },
+    {
+      "id": 54,
+      "especie": "Boa constrictor",
+      "masa": 12.0,
+      "metabolismo": 3.0892
+    },
+    {
+      "id": 55,
+      "especie": "Pitón birmana",
+      "masa": 35.0,
+      "metabolismo": 14.838
+    },
+    {
+      "id": 56,
+      "especie": "Varano",
+      "masa": 40.0,
+      "metabolismo": 17.2888
+    },
+    {
+      "id": 57,
+      "especie": "Tortuga mordedora",
+      "masa": 55.0,
+      "metabolismo": 7.558
+    },
+    {
+      "id": 58,
+      "especie": "Dragón de Komodo",
+      "masa": 80.0,
+      "metabolismo": 17.4706
+    },
+    {
+      "id": 59,
+      "especie": "Anaconda",
+      "masa": 120.0,
+      "metabolismo": 44.3626
+    },
+    {
+      "id": 60,
+      "especie": "Tortuga gigante",
+      "masa": 180.0,
+      "metabolismo": 50.9169
+    },
+    {
+      "id": 61,
+      "especie": "Caimán",
+      "masa": 250.0,
+      "metabolismo": 38.7034
+    },
+    {
+      "id": 62,
+      "especie": "Aligátor americano",
+      "masa": 320.0,
+      "metabolismo": 111.0892
+    },
+    {
+      "id": 63,
+      "especie": "Tortuga laúd",
+      "masa": 450.0,
+      "metabolismo": 93.426
+    },
+    {
+      "id": 64,
+      "especie": "Cocodrilo del Nilo",
+      "masa": 500.0,
+      "metabolismo": 77.6009
+    },
+    {
+      "id": 65,
+      "especie": "Cocodrilo marino",
+      "masa": 700.0,
+      "metabolismo": 142.7797
+    },
+    {
+      "id": 66,
+      "especie": "Tortuga verde",
+      "masa": 130.0,
+      "metabolismo": 38.9004
+    }
+  ],
+  "PEC": [
+    {
+      "id": 67,
+      "especie": "Gobio",
+      "masa": 0.005,
+      "metabolismo": 0.0055
+    },
+    {
+      "id": 68,
+      "especie": "Anchoa",
+      "masa": 0.02,
+      "metabolismo": 0.0209
+    },
+    {
+      "id": 69,
+      "especie": "Sardina",
+      "masa": 0.08,
+      "metabolismo": 0.0365
+    },
+    {
+      "id": 70,
+      "especie": "Pez dorado",
+      "masa": 0.15,
+      "metabolismo": 0.2009
+    },
+    {
+      "id": 71,
+      "especie": "Trucha",
+      "masa": 0.5,
+      "metabolismo": 0.4139
+    },
+    {
+      "id": 72,
+      "especie": "Perca",
+      "masa": 0.9,
+      "metabolismo": 0.6286
+    },
+    {
+      "id": 73,
+      "especie": "Carpa",
+      "masa": 2.5,
+      "metabolismo": 0.8506
+    },
+    {
+      "id": 74,
+      "especie": "Salmón",
+      "masa": 4.0,
+      "metabolismo": 1.6493
+    },
+    {
+      "id": 75,
+      "especie": "Bacalao",
+      "masa": 8.0,
+      "metabolismo": 2.14
+    },
+    {
+      "id": 76,
+      "especie": "Lubina",
+      "masa": 3.0,
+      "metabolismo": 2.7154
+    },
+    {
+      "id": 77,
+      "especie": "Mero",
+      "masa": 25.0,
+      "metabolismo": 3.1744
+    },
+    {
+      "id": 78,
+      "especie": "Congrio",
+      "masa": 14.0,
+      "metabolismo": 5.2648
+    },
+    {
+      "id": 79,
+      "especie": "Pez espada",
+      "masa": 90.0,
+      "metabolismo": 8.3472
+    },
+    {
+      "id": 80,
+      "especie": "Atún rojo",
+      "masa": 200.0,
+      "metabolismo": 33.6014
+    },
+    {
+      "id": 81,
+      "especie": "Pez luna",
+      "masa": 1000.0,
+      "metabolismo": 82.3679
+    },
+    {
+      "id": 82,
+      "especie": "Tiburón martillo",
+      "masa": 450.0,
+      "metabolismo": 42.8815
+    },
+    {
+      "id": 83,
+      "especie": "Manta gigante",
+      "masa": 700.0,
+      "metabolismo": 116.718
+    },
+    {
+      "id": 84,
+      "especie": "Tiburón blanco",
+      "masa": 900.0,
+      "metabolismo": 71.227
+    },
+    {
+      "id": 85,
+      "especie": "Esturión",
+      "masa": 180.0,
+      "metabolismo": 34.8016
+    },
+    {
+      "id": 86,
+      "especie": "Marlín azul",
+      "masa": 320.0,
+      "metabolismo": 51.9529
+    },
+    {
+      "id": 87,
+      "especie": "Tiburón peregrino",
+      "masa": 4000.0,
+      "metabolismo": 395.0396
+    },
+    {
+      "id": 88,
+      "especie": "Tiburón ballena",
+      "masa": 12000.0,
+      "metabolismo": 808.307
+    }
+  ]
+}
