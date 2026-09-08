@@ -40,6 +40,8 @@ interface FitData {
   };
 }
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 const CLUSTER_INFO: Record<string, { title: string; color: string }> = {
   MAM: { title: 'Mamíferos', color: '#f59e0b' },
   AVE: { title: 'Aves', color: '#38bdf8' },
@@ -84,7 +86,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/fit-all')
+    fetch(`${API_URL}/api/fit-all`)
       .then((res) => res.json())
       .then((json) => {
         if (json.error) {
