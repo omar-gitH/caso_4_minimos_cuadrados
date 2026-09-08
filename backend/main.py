@@ -41,10 +41,11 @@ def get_fit(cluster_id: str):
     # Extraer arrays
     x_vals = [d["masa"] for d in data]
     y_vals = [d["metabolismo"] for d in data]
+    species_vals = [d["especie"] for d in data]
     
     # Calcular
     try:
-        result = calculate_least_squares_potential(x_vals, y_vals)
+        result = calculate_least_squares_potential(x_vals, y_vals, species_vals)
         return {
             "cluster": cluster_id,
             "data_points": [{"x": x, "y": y, "especie": d["especie"]} for x, y, d in zip(x_vals, y_vals, data)],
@@ -62,8 +63,13 @@ def get_fit_all():
     for cluster_id, data in dataset.items():
         x_vals = [d["masa"] for d in data]
         y_vals = [d["metabolismo"] for d in data]
+        species_vals = [d["especie"] for d in data]
         results[cluster_id] = {
             "data_points": [{"x": x, "y": y, "especie": d["especie"]} for x, y, d in zip(x_vals, y_vals, data)],
-            "fit": calculate_least_squares_potential(x_vals, y_vals)
+            "fit": calculate_least_squares_potential(x_vals, y_vals, species_vals)
         }
     return results
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

@@ -23,6 +23,8 @@ interface ClusterChartProps {
   curvePoints: DataPoint[];
   equation: string;
   r2: number;
+  a?: number;
+  b?: number;
   color?: string;
 }
 
@@ -31,18 +33,18 @@ const CustomTooltip = ({ active, payload }: any) => {
     const data = payload[0].payload;
     if (data.especie) {
       return (
-        <div className="bg-white p-3 border border-slate-200 shadow-lg rounded-lg">
-          <p className="font-bold text-slate-800">{data.especie}</p>
-          <p className="text-slate-600 text-sm">Masa: {data.x} kg</p>
-          <p className="text-slate-600 text-sm">Metabolismo: {data.y} W</p>
+        <div className="bg-slate-900/90 backdrop-blur-md p-4 border border-white/20 shadow-2xl rounded-xl">
+          <p className="font-bold text-white mb-2">{data.especie}</p>
+          <p className="text-slate-300 text-sm">Masa: <span className="text-emerald-400 font-mono">{data.x} kg</span></p>
+          <p className="text-slate-300 text-sm">Metabolismo: <span className="text-cyan-400 font-mono">{data.y} W</span></p>
         </div>
       );
     }
     return (
-      <div className="bg-white p-2 border border-slate-200 shadow rounded">
-        <p className="text-slate-600 text-sm font-semibold mb-1">Ajuste Teórico</p>
-        <p className="text-slate-500 text-xs">Masa: {data.x.toFixed(3)} kg</p>
-        <p className="text-slate-500 text-xs">Tasa Estimada: {data.y.toFixed(3)} W</p>
+      <div className="bg-slate-900/90 backdrop-blur-md p-3 border border-emerald-500/50 shadow-2xl rounded-xl">
+        <p className="text-emerald-400 text-sm font-semibold mb-2">Ajuste Teórico</p>
+        <p className="text-slate-400 text-xs">Masa: <span className="text-white font-mono">{data.x.toFixed(3)} kg</span></p>
+        <p className="text-slate-400 text-xs">Tasa Estimada: <span className="text-white font-mono">{data.y.toFixed(3)} W</span></p>
       </div>
     );
   }
@@ -55,25 +57,31 @@ export const ClusterChart: React.FC<ClusterChartProps> = ({
   curvePoints,
   equation,
   r2,
-  color = '#059669'
+  a,
+  b,
+  color = '#34d399' // emerald-400 default
 }) => {
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col h-full hover:shadow-md transition-shadow">
-      <h3 className="text-xl font-bold text-slate-800 mb-6">{title}</h3>
+    <div className="bg-slate-900/40 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/10 flex flex-col h-full hover:border-white/20 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+      <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+        <div className="w-4 h-4 rounded-full shadow-[0_0_10px_currentColor]" style={{ backgroundColor: color, color: color }}></div>
+        {title}
+      </h3>
       
-      <div className="h-[350px] w-full">
+      <div className="h-[400px] w-full bg-black/20 rounded-2xl p-4 border border-white/5">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart margin={{ top: 10, right: 20, bottom: 20, left: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} opacity={0.5} />
             <XAxis 
               dataKey="x" 
               type="number" 
               name="Masa" 
               scale="log"
               domain={['auto', 'auto']}
-              label={{ value: 'Masa (kg)', position: 'insideBottom', offset: -15, fill: '#64748b' }}
-              tick={{ fontSize: 12, fill: '#64748b' }}
+              label={{ value: 'Masa (kg)', position: 'insideBottom', offset: -15, fill: '#94a3b8' }}
+              tick={{ fontSize: 12, fill: '#94a3b8' }}
               tickFormatter={(val) => val >= 1000 ? `${val/1000}k` : val}
+              stroke="#475569"
             />
             <YAxis 
               dataKey="y" 
@@ -81,10 +89,11 @@ export const ClusterChart: React.FC<ClusterChartProps> = ({
               name="Metabolismo" 
               scale="log"
               domain={['auto', 'auto']}
-              label={{ value: 'Tasa Metabólica (W)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' }, fill: '#64748b', offset: -10 }}
-              tick={{ fontSize: 12, fill: '#64748b' }}
+              label={{ value: 'Tasa Metabólica (W)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' }, fill: '#94a3b8', offset: -10 }}
+              tick={{ fontSize: 12, fill: '#94a3b8' }}
+              stroke="#475569"
             />
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3', stroke: '#64748b' }} />
             
             {/* Puntos experimentales */}
             <Scatter 
@@ -99,18 +108,19 @@ export const ClusterChart: React.FC<ClusterChartProps> = ({
               data={curvePoints} 
               type="monotone" 
               dataKey="y" 
-              stroke="#0f172a" 
-              strokeWidth={3}
+              stroke="#f8fafc" 
+              strokeWidth={4}
               dot={false}
               activeDot={false}
               name="Ajuste Potencial"
+              style={{ filter: 'drop-shadow(0px 0px 5px rgba(255,255,255,0.5))' }}
             />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-auto pt-6">
-        <ResultCard equation={equation} r2={r2} />
+      <div className="mt-8">
+        <ResultCard equation={equation} r2={r2} a={a} b={b} />
       </div>
     </div>
   );

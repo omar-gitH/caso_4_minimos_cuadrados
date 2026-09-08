@@ -1,34 +1,76 @@
 import React from 'react';
-import { BlockMath } from 'react-katex';
+import { BlockMath, InlineMath } from 'react-katex';
 
 interface ResultCardProps {
   equation: string;
   r2: number;
+  a?: number;
+  b?: number;
 }
 
-export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2 }) => {
+export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) => {
   const quality = r2 >= 0.9 ? 'Excelente' : r2 >= 0.7 ? 'Bueno' : 'Regular';
-  const color = r2 >= 0.9 ? 'text-emerald-600' : r2 >= 0.7 ? 'text-blue-600' : 'text-amber-600';
+  const colorClass = r2 >= 0.9 ? 'text-emerald-400' : r2 >= 0.7 ? 'text-cyan-400' : 'text-amber-400';
+  const borderClass = r2 >= 0.9 ? 'border-emerald-500/30' : r2 >= 0.7 ? 'border-cyan-500/30' : 'border-amber-500/30';
+  const bgClass = r2 >= 0.9 ? 'bg-emerald-500/10' : r2 >= 0.7 ? 'bg-cyan-500/10' : 'bg-amber-500/10';
+
+  // Ensure equation starts with y =
+  const cleanEquation = equation.trim().startsWith('y =') ? equation : `y = ${equation}`;
 
   return (
-    <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-100 flex flex-col justify-center items-center">
-        <p className="text-emerald-800 text-sm font-semibold mb-2 self-start">Ecuación Calculada</p>
-        <div className="text-emerald-900 text-lg sm:text-xl w-full flex justify-center overflow-x-auto py-2">
-          <BlockMath math={equation} />
-        </div>
-      </div>
-      <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 flex flex-col justify-center">
-        <p className="text-slate-600 text-sm font-semibold mb-1">
-          Bondad del Ajuste (r²)
-        </p>
-        <div className="flex items-baseline gap-2">
-          <p className={`font-mono font-bold text-xl ${color}`}>
-            {r2.toFixed(4)}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
+      {/* Ecuación Calculada */}
+      <div className="bg-black/50 backdrop-blur-md rounded-2xl p-5 border border-white/10 flex flex-col justify-between shadow-inner relative overflow-hidden group">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-60 group-hover:opacity-100 transition-opacity"></div>
+        
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-slate-400 text-xs font-semibold tracking-wider uppercase">
+            Ecuación de Ajuste
           </p>
-          <span className="text-xs font-bold px-2 py-1 bg-white rounded shadow-sm text-slate-600 uppercase tracking-wider">
+          <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-300">
+            Modelo: <InlineMath math="y = a \cdot x^b" />
+          </span>
+        </div>
+
+        {/* Scrollable Container without left-clipping bug */}
+        <div className="w-full overflow-x-auto py-2">
+          <div className="inline-flex items-center justify-center min-w-full px-2 text-emerald-400 text-lg sm:text-xl xl:text-2xl font-medium">
+            <BlockMath math={cleanEquation} />
+          </div>
+        </div>
+
+        {/* Parámetros explícitos si están disponibles */}
+        {(a !== undefined && b !== undefined) && (
+          <div className="flex items-center justify-around pt-2 border-t border-white/5 text-xs text-slate-400 font-mono">
+            <span><strong className="text-slate-300">a:</strong> {a.toFixed(4)}</span>
+            <span><strong className="text-slate-300">b:</strong> {b.toFixed(4)}</span>
+          </div>
+        )}
+      </div>
+      
+      {/* Bondad del Ajuste */}
+      <div className={`backdrop-blur-md rounded-2xl p-5 border ${borderClass} ${bgClass} flex flex-col justify-between shadow-lg relative`}>
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-slate-300 text-xs font-semibold tracking-wider uppercase">
+            Bondad del Ajuste (r²)
+          </p>
+          <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider border ${borderClass} bg-black/40 ${colorClass}`}>
             {quality}
           </span>
+        </div>
+
+        <div className="flex items-baseline justify-start gap-3 my-auto py-2">
+          <p className={`font-mono font-extrabold text-3xl sm:text-4xl lg:text-5xl ${colorClass} drop-shadow-md`}>
+            {r2.toFixed(4)}
+          </p>
+          <span className="text-xs text-slate-400 font-light">
+            ({(r2 * 100).toFixed(2)}% varianza explicada)
+          </span>
+        </div>
+
+        <div className="text-[11px] text-slate-400 font-light pt-2 border-t border-white/5 flex justify-between items-center">
+          <span>Criterio: <strong className="text-slate-300">r² &gt; 0.85</strong> óptimo</span>
+          <span className="text-slate-500">UTN FRP</span>
         </div>
       </div>
     </div>
