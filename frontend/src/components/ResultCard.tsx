@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { BlockMath, InlineMath } from 'react-katex';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ResultCardProps {
   equation: string;
@@ -14,13 +15,22 @@ export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) =>
   const borderClass = r2 >= 0.9 ? 'border-emerald-500/30' : r2 >= 0.7 ? 'border-cyan-500/30' : 'border-amber-500/30';
   const bgClass = r2 >= 0.9 ? 'bg-emerald-500/10' : r2 >= 0.7 ? 'bg-cyan-500/10' : 'bg-amber-500/10';
 
+  const eqScrollRef = useRef<HTMLDivElement>(null);
+
+  const slideEquation = (dir: 'left' | 'right') => {
+    if (eqScrollRef.current) {
+      const offset = dir === 'left' ? -120 : 120;
+      eqScrollRef.current.scrollBy({ left: offset, behavior: 'smooth' });
+    }
+  };
+
   // Ensure equation starts with y =
   const cleanEquation = equation.trim().startsWith('y =') ? equation : `y = ${equation}`;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
       {/* Ecuación Calculada */}
-      <div className="bg-black/50 backdrop-blur-md rounded-2xl p-5 border border-white/10 flex flex-col justify-between shadow-inner relative overflow-hidden group">
+      <div className="glass-panel rounded-2xl p-5 border border-white/10 flex flex-col justify-between shadow-inner relative overflow-hidden group hover:border-emerald-500/40 transition-all">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-60 group-hover:opacity-100 transition-opacity"></div>
         
         <div className="flex items-center justify-between mb-2">
@@ -32,10 +42,34 @@ export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) =>
           </span>
         </div>
 
-        {/* Scrollable Container without left-clipping bug */}
-        <div className="w-full overflow-x-auto py-2">
-          <div className="inline-flex items-center justify-center min-w-full px-2 text-emerald-400 text-lg sm:text-xl xl:text-2xl font-medium">
-            <BlockMath math={cleanEquation} />
+        {/* Horizontal Slider with Touch & Navigation Controls for Smaller Screens */}
+        <div className="relative w-full my-1">
+          <div 
+            ref={eqScrollRef}
+            className="w-full overflow-x-auto slider-touch no-scrollbar sm:custom-scrollbar py-2"
+          >
+            <div className="inline-flex items-center justify-center min-w-full px-4 text-emerald-400 text-base sm:text-lg md:text-xl xl:text-2xl font-medium whitespace-nowrap">
+              <BlockMath math={cleanEquation} />
+            </div>
+          </div>
+
+          {/* Slider Left / Right Buttons for Mobile & Tablets */}
+          <div className="flex justify-between items-center px-1 pt-1 sm:hidden">
+            <button
+              onClick={() => slideEquation('left')}
+              className="p-1 px-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 text-[11px] flex items-center gap-1 border border-white/5 cursor-pointer"
+            >
+              <ChevronLeft className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Deslizar</span>
+            </button>
+            <span className="text-[10px] text-slate-500 font-mono">↔ Mover</span>
+            <button
+              onClick={() => slideEquation('right')}
+              className="p-1 px-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 text-[11px] flex items-center gap-1 border border-white/5 cursor-pointer"
+            >
+              <span>Deslizar</span>
+              <ChevronRight className="w-3.5 h-3.5 text-emerald-400" />
+            </button>
           </div>
         </div>
 

@@ -99,7 +99,7 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
   ];
 
   return (
-    <div className="bg-slate-900/50 backdrop-blur-lg p-6 md:p-12 rounded-3xl shadow-2xl border border-white/10 w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10">
+    <div className="glass-panel p-6 md:p-12 rounded-3xl shadow-2xl border border-white/10 w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10 transform-gpu">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-white/10 pb-8">
@@ -186,13 +186,18 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
 
       {/* Tabla Sinóptica de Comparación */}
       <div className="space-y-4">
-        <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Compass className="w-6 h-6 text-cyan-400" />
-          Tabla Sinóptica de Parámetros por Clúster
-        </h3>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+            <Compass className="w-6 h-6 text-cyan-400" />
+            Tabla Sinóptica de Parámetros por Clúster
+          </h3>
+          <div className="flex sm:hidden items-center gap-1.5 text-xs text-cyan-400 font-mono bg-cyan-950/40 px-3 py-1 rounded-full border border-cyan-500/20 w-fit">
+            <span>⇄ Desliza horizontalmente la tabla</span>
+          </div>
+        </div>
 
-        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-black/40">
-          <table className="w-full text-left border-collapse text-sm md:text-base">
+        <div className="overflow-x-auto slider-touch rounded-2xl border border-white/10 bg-black/40 shadow-inner">
+          <table className="min-w-[720px] w-full text-left border-collapse text-sm md:text-base">
             <thead>
               <tr className="bg-white/5 border-b border-white/10 text-slate-400 uppercase text-xs tracking-wider">
                 <th className="p-4">Clúster</th>

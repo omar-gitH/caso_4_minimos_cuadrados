@@ -4,7 +4,7 @@ import { BlockMath, InlineMath } from 'react-katex';
 
 export const TheoryTab: React.FC = () => {
   return (
-    <div className="bg-slate-900/50 backdrop-blur-lg p-6 md:p-12 rounded-3xl shadow-2xl border border-white/10 w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10">
+    <div className="glass-panel p-6 md:p-12 rounded-3xl shadow-2xl border border-white/10 w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10 transform-gpu">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-white/10 pb-8">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Scale, CheckCircle, XCircle, AlertTriangle, BarChart3 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { InlineMath } from 'react-katex';
 import { ResponsiveContainer, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine } from 'recharts';
 
@@ -54,12 +55,12 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
   const residuals = fitInfo?.residuals || [];
 
   return (
-    <div className="bg-slate-900/50 backdrop-blur-lg p-6 md:p-12 rounded-3xl shadow-2xl border border-white/10 w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10">
+    <div className="glass-panel p-6 md:p-12 rounded-3xl shadow-2xl border border-white/10 w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10 transform-gpu">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-white/10 pb-8">
         <div className="flex items-center gap-4">
-          <div className="p-4 bg-amber-500/20 rounded-2xl border border-amber-500/30">
+          <div className="p-4 bg-amber-500/20 rounded-2xl border border-amber-500/30 glow-amber">
             <Scale className="text-amber-400 w-8 h-8" />
           </div>
           <div>
@@ -75,20 +76,22 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
           </div>
         </div>
 
-        {/* Cluster Selector Tabs */}
-        <div className="flex bg-black/40 p-1.5 rounded-2xl border border-white/10 gap-1.5 flex-wrap justify-center">
+        {/* Cluster Selector Tabs with Mobile Slider */}
+        <div className="flex glass-pill p-1.5 rounded-2xl gap-1.5 overflow-x-auto slider-touch no-scrollbar max-w-full touch-pan-x justify-start sm:justify-center">
           {CLUSTERS.map((c) => (
-            <button
+            <motion.button
               key={c.id}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => setSelectedCluster(c.id)}
-              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer shimmer-btn flex-shrink-0 ${
                 selectedCluster === c.id
-                  ? 'bg-amber-500 text-slate-950 font-bold shadow-lg shadow-amber-500/20'
+                  ? 'bg-amber-500 text-slate-950 font-bold shadow-lg glow-amber'
                   : 'text-slate-400 hover:text-white hover:bg-white/5'
               }`}
             >
               {c.name}
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>
@@ -105,8 +108,9 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
       </div>
 
       {/* Tabla Comparativa de Modelos */}
-      <div className="overflow-x-auto rounded-2xl border border-white/10 bg-black/40">
-        <table className="w-full text-left border-collapse text-sm md:text-base">
+      <div className="space-y-1">
+        <div className="overflow-x-auto slider-touch rounded-2xl border border-white/10 bg-black/40">
+          <table className="w-full text-left border-collapse text-sm md:text-base min-w-[650px]">
           <thead>
             <tr className="bg-white/5 border-b border-white/10 text-slate-400 uppercase text-xs tracking-wider">
               <th className="p-4">Modelo</th>
@@ -156,6 +160,7 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Sección de Residuos */}
@@ -172,23 +177,27 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
           </div>
 
           {/* Toggle Log vs Linear Residuals */}
-          <div className="flex items-center bg-black/40 p-1 rounded-xl border border-white/10 text-xs">
-            <button
+          <div className="flex items-center glass-pill p-1 rounded-xl text-xs gap-1">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => setUseLogResiduals(true)}
-              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                useLogResiduals ? 'bg-emerald-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer shimmer-btn ${
+                useLogResiduals ? 'bg-emerald-500 text-slate-950 font-bold glow-emerald' : 'text-slate-400 hover:text-white'
               }`}
             >
               Espacio Logarítmico (Homocedástico)
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => setUseLogResiduals(false)}
-              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
-                !useLogResiduals ? 'bg-emerald-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white'
+              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer shimmer-btn ${
+                !useLogResiduals ? 'bg-emerald-500 text-slate-950 font-bold glow-emerald' : 'text-slate-400 hover:text-white'
               }`}
             >
               Espacio Real (W)
-            </button>
+            </motion.button>
           </div>
         </div>
 

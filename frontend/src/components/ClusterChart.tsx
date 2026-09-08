@@ -62,15 +62,15 @@ export const ClusterChart: React.FC<ClusterChartProps> = ({
   color = '#34d399' // emerald-400 default
 }) => {
   return (
-    <div className="bg-slate-900/40 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/10 flex flex-col h-full hover:border-white/20 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
-      <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-        <div className="w-4 h-4 rounded-full shadow-[0_0_10px_currentColor]" style={{ backgroundColor: color, color: color }}></div>
+    <div className="glass-panel p-4 sm:p-6 md:p-8 rounded-3xl shadow-2xl border border-white/10 flex flex-col h-full hover:border-white/20 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] transform-gpu">
+      <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8 flex items-center gap-3">
+        <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full shadow-[0_0_10px_currentColor]" style={{ backgroundColor: color, color: color }}></div>
         {title}
       </h3>
       
-      <div className="h-[400px] w-full bg-black/20 rounded-2xl p-4 border border-white/5">
+      <div className="h-[340px] sm:h-[400px] w-full bg-black/20 rounded-2xl p-1 sm:p-4 border border-white/5">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart margin={{ top: 10, right: 20, bottom: 20, left: 20 }}>
+          <ComposedChart margin={{ top: 10, right: 10, bottom: 20, left: 10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} opacity={0.5} />
             <XAxis 
               dataKey="x" 
