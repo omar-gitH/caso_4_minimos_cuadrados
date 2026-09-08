@@ -4,7 +4,7 @@ Esta aplicación permite visualizar y calcular el ajuste de curvas a un conjunto
 
 ---
 
-## 🧮 ¿En qué se basa el Método de Mínimos Cuadrados?
+##  ¿En qué se basa el Método de Mínimos Cuadrados?
 
 El **Método de Mínimos Cuadrados** es un procedimiento estándar del análisis numérico para aproximar un conjunto de datos (pares de valores $x$ e $y$) a una función matemática continua (como una recta, una parábola, una curva exponencial, etc.).
 
@@ -20,7 +20,7 @@ Este método es la base de la regresión lineal (y no lineal) y es fundamental p
 
 ---
 
-## 🚀 Instrucciones de Instalación y Ejecución
+##  Instrucciones de Instalación y Ejecución
 
 Para ejecutar la aplicación completa en tu computadora, debes levantar tanto el servidor del **Backend** como el del **Frontend** en paralelo (en dos terminales distintas).
 
