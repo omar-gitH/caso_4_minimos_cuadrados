@@ -42,9 +42,9 @@ interface FitData {
 
 const CLUSTER_INFO: Record<string, { title: string; color: string }> = {
   MAM: { title: 'Mamíferos', color: '#f59e0b' },
-  AVE: { title: 'Aves', color: '#3b82f6' },
-  REP: { title: 'Reptiles', color: '#10b981' },
-  PEC: { title: 'Peces', color: '#6366f1' },
+  AVE: { title: 'Aves', color: '#38bdf8' },
+  REP: { title: 'Reptiles', color: '#34d399' },
+  PEC: { title: 'Peces', color: '#818cf8' },
 };
 
 function App() {
@@ -109,109 +109,127 @@ function App() {
   ] as const;
 
   return (
-    <div className="min-h-screen relative text-slate-100 flex flex-col items-center">
+    <div className="min-h-screen relative bg-[#151e2e] text-slate-200 flex flex-col items-center">
       
-      {/* High-Performance Fixed Background Orbs (No Scroll Stutter across Chrome, Firefox, Opera GX, Edge) */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden transform-gpu will-change-transform">
-        <div className="absolute -top-[15%] -left-[10%] w-[550px] h-[550px] rounded-full bg-emerald-500/12 blur-[100px]"></div>
-        <div className="absolute top-[35%] -right-[10%] w-[600px] h-[600px] rounded-full bg-indigo-500/12 blur-[110px]"></div>
-        <div className="absolute -bottom-[15%] left-[25%] w-[500px] h-[500px] rounded-full bg-cyan-500/10 blur-[90px]"></div>
+      {/* Subtle background glow */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute -top-[10%] -left-[5%] w-[500px] h-[500px] rounded-full bg-blue-600/[0.05] blur-[100px]"></div>
+        <div className="absolute top-[30%] -right-[5%] w-[500px] h-[500px] rounded-full bg-indigo-600/[0.05] blur-[100px]"></div>
       </div>
 
       <div className="relative z-10 w-full max-w-[1700px] p-3 sm:p-6 md:p-8 2xl:p-10 space-y-8">
         
-        {/* Futuristic Glassmorphic Header */}
+        {/* Modern Academic Header (Balanced Slate Theme, High Contrast) */}
         <motion.header 
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative glass-panel rounded-3xl overflow-hidden flex flex-col items-center justify-center p-8 md:p-12 text-center"
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="relative bg-[#1e293b] rounded-3xl border border-[#334155] shadow-lg overflow-hidden flex flex-col items-center justify-center p-6 sm:p-10 md:p-12 text-center"
         >
-          {/* Top glowing laser line */}
-          <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-500 via-cyan-400 to-indigo-500"></div>
+          {/* Top subtle primary accent line */}
+          <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500 opacity-80"></div>
 
-          {/* Floating Pill Badges */}
-          <div className="flex items-center gap-2.5 flex-wrap justify-center mb-6">
-            <span className="flex items-center gap-2 text-xs uppercase font-extrabold tracking-widest px-3.5 py-1.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          {/* Institutional Badges */}
+          <div className="flex items-center gap-2.5 flex-wrap justify-center mb-5">
+            <span className="flex items-center gap-2 text-xs uppercase font-bold tracking-wider px-3.5 py-1.5 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/40">
+              <span className="w-2 h-2 rounded-full bg-blue-400"></span>
               Caso 4 · Análisis Numérico
             </span>
-            <span className="text-xs text-slate-400 font-mono px-3 py-1 rounded-full bg-white/5 border border-white/5">
+            <span className="text-xs text-slate-300 font-mono px-3.5 py-1.5 rounded-full bg-slate-800 border border-slate-700">
               UTN Facultad Regional La Plata
             </span>
           </div>
 
-          <motion.div 
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", bounce: 0.4 }}
-            className="p-4 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 rounded-2xl mb-4 border border-emerald-500/30 shadow-lg glow-emerald"
-          >
-            <Activity className="w-10 h-10 text-emerald-400" />
-          </motion.div>
+          <div className="p-3.5 bg-blue-950/60 text-blue-300 rounded-2xl mb-3.5 border border-blue-800/40 shadow-xs">
+            <Activity className="w-8 h-8 sm:w-9 sm:h-9" />
+          </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-300 to-indigo-300 drop-shadow-sm">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3 text-slate-100">
             Masa Corporal vs Metabolismo Animal
           </h1>
           
-          <p className="text-slate-300 max-w-3xl text-base sm:text-lg md:text-xl font-light leading-relaxed mb-6">
-            Modelado Alométrico y Ajuste Riguroso por Mínimos Cuadrados en <strong className="text-amber-400">Mamíferos</strong>, <strong className="text-blue-400">Aves</strong>, <strong className="text-emerald-400">Reptiles</strong> y <strong className="text-indigo-400">Peces</strong>.
+          <p className="text-slate-300 max-w-3xl text-base sm:text-lg font-normal leading-relaxed mb-6">
+            Modelado Alométrico y Ajuste Riguroso por Mínimos Cuadrados en{' '}
+            <strong className="text-amber-300 font-semibold">Mamíferos</strong>,{' '}
+            <strong className="text-blue-300 font-semibold">Aves</strong>,{' '}
+            <strong className="text-emerald-300 font-semibold">Reptiles</strong> y{' '}
+            <strong className="text-indigo-300 font-semibold">Peces</strong>.
           </p>
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl text-left">
-            <div className="p-3 bg-white/[0.03] hover:bg-white/[0.06] transition-colors rounded-xl border border-white/5 flex items-center gap-3">
-              <Database className="w-5 h-5 text-emerald-400" />
+            <motion.div 
+              whileHover={{ y: -2, scale: 1.02 }}
+              className="p-3 bg-[#243147]/90 hover:bg-[#2a3850] transition-all rounded-xl border border-[#334155] hover:border-blue-500/40 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] flex items-center gap-3 cursor-default btn-shimmer"
+            >
+              <div className="p-1.5 bg-blue-950/60 rounded-lg text-blue-400 border border-blue-800/40">
+                <Database className="w-4 h-4 flex-shrink-0" />
+              </div>
               <div>
                 <span className="block text-[11px] text-slate-400 font-medium">Observaciones</span>
-                <span className="text-sm font-bold text-white font-mono">88 Especies</span>
+                <span className="text-sm font-bold text-slate-100 font-mono">88 Especies</span>
               </div>
-            </div>
-            <div className="p-3 bg-white/[0.03] hover:bg-white/[0.06] transition-colors rounded-xl border border-white/5 flex items-center gap-3">
-              <GitBranch className="w-5 h-5 text-cyan-400" />
+            </motion.div>
+            <motion.div 
+              whileHover={{ y: -2, scale: 1.02 }}
+              className="p-3 bg-[#243147]/90 hover:bg-[#2a3850] transition-all rounded-xl border border-[#334155] hover:border-indigo-500/40 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] flex items-center gap-3 cursor-default btn-shimmer"
+            >
+              <div className="p-1.5 bg-indigo-950/60 rounded-lg text-indigo-400 border border-indigo-800/40">
+                <GitBranch className="w-4 h-4 flex-shrink-0" />
+              </div>
               <div>
                 <span className="block text-[11px] text-slate-400 font-medium">Clústeres</span>
-                <span className="text-sm font-bold text-white font-mono">4 Grupos</span>
+                <span className="text-sm font-bold text-slate-100 font-mono">4 Grupos</span>
               </div>
-            </div>
-            <div className="p-3 bg-white/[0.03] hover:bg-white/[0.06] transition-colors rounded-xl border border-white/5 flex items-center gap-3">
-              <Sparkles className="w-5 h-5 text-indigo-400" />
+            </motion.div>
+            <motion.div 
+              whileHover={{ y: -2, scale: 1.02 }}
+              className="p-3 bg-[#243147]/90 hover:bg-[#2a3850] transition-all rounded-xl border border-[#334155] hover:border-amber-500/40 hover:shadow-[0_0_15px_rgba(245,158,11,0.2)] flex items-center gap-3 cursor-default btn-shimmer"
+            >
+              <div className="p-1.5 bg-amber-950/60 rounded-lg text-amber-400 border border-amber-800/40">
+                <Sparkles className="w-4 h-4 flex-shrink-0" />
+              </div>
               <div>
                 <span className="block text-[11px] text-slate-400 font-medium">Ley Biofísica</span>
-                <span className="text-sm font-bold text-white font-mono">Kleiber (3/4)</span>
+                <span className="text-sm font-bold text-slate-100 font-mono">Kleiber (3/4)</span>
               </div>
-            </div>
-            <div className="p-3 bg-white/[0.03] hover:bg-white/[0.06] transition-colors rounded-xl border border-white/5 flex items-center gap-3">
-              <Activity className="w-5 h-5 text-amber-400" />
+            </motion.div>
+            <motion.div 
+              whileHover={{ y: -2, scale: 1.02 }}
+              className="p-3 bg-[#243147]/90 hover:bg-[#2a3850] transition-all rounded-xl border border-[#334155] hover:border-emerald-500/40 hover:shadow-[0_0_15px_rgba(16,185,129,0.2)] flex items-center gap-3 cursor-default btn-shimmer"
+            >
+              <div className="p-1.5 bg-emerald-950/60 rounded-lg text-emerald-400 border border-emerald-800/40">
+                <Activity className="w-4 h-4 flex-shrink-0" />
+              </div>
               <div>
                 <span className="block text-[11px] text-slate-400 font-medium">Ajuste (r²)</span>
                 <span className="text-sm font-bold text-emerald-400 font-mono">&gt; 0.9100</span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </motion.header>
 
-        {/* Floating Futuristic HUD Tab Navigation with Horizontal Slider for Mobile & Tablet */}
+        {/* Modern Clean Floating Tab Navigation */}
         <div 
           ref={navContainerRef}
           className="sticky top-3 sm:top-4 z-50 flex items-center justify-center w-full max-w-full px-1 sm:px-4 pointer-events-none"
         >
           
-          {/* Slider Left Arrow for Mobile / Tablet */}
+          {/* Slider Left Arrow */}
           <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.12, y: -1 }}
+            whileTap={{ scale: 0.92 }}
             onClick={() => scrollNav('left')}
-            className="mr-1 sm:mr-2 p-2 rounded-full glass-pill text-slate-300 hover:text-white hover:border-emerald-400/50 shadow-lg flex-shrink-0 cursor-pointer lg:hidden z-10 pointer-events-auto"
+            className="mr-2 p-2.5 rounded-full bg-[#1e293b]/95 text-slate-300 hover:text-white hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.35)] border border-[#334155] shadow-lg flex-shrink-0 cursor-pointer lg:hidden z-10 pointer-events-auto transition-all btn-shimmer"
             title="Deslizar hacia la izquierda"
             aria-label="Deslizar a la izquierda"
           >
-            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-slate-200" />
           </motion.button>
 
           <nav 
             ref={navRef}
-            className="flex space-x-1.5 sm:space-x-2 glass-pill p-1.5 sm:p-2 rounded-full overflow-x-auto slider-touch no-scrollbar max-w-full touch-pan-x scroll-smooth shadow-2xl pointer-events-auto"
+            className="flex space-x-1 sm:space-x-2 bg-[#1e293b]/90 backdrop-blur-xl p-1.5 sm:p-2 rounded-full border border-white/10 shadow-[0_10px_35px_rgba(0,0,0,0.4)] overflow-x-auto slider-touch no-scrollbar max-w-full touch-pan-x scroll-smooth pointer-events-auto"
           >
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -219,21 +237,21 @@ function App() {
               return (
                 <motion.button
                   key={tab.id}
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.04, y: -1 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={() => handleTabChange(tab.id)}
-                  className={`relative flex items-center gap-1.5 sm:gap-2 py-2 sm:py-2.5 px-3.5 sm:px-5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap outline-none cursor-pointer flex-shrink-0 shimmer-btn
-                    ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}`}
+                  className={`relative flex items-center gap-2 py-2.5 px-4 sm:px-5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap outline-none cursor-pointer flex-shrink-0 btn-shimmer
+                    ${isActive ? 'text-white font-bold' : 'text-slate-300 hover:text-white hover:bg-slate-800/70'}`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="active-tab"
-                      className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.5)] border border-emerald-400/30"
-                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                      className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 rounded-full shadow-[0_0_24px_rgba(59,130,246,0.55)] border border-blue-400/40"
+                      transition={{ type: "spring", stiffness: 450, damping: 30 }}
                     />
                   )}
-                  <span className="relative z-10 flex items-center gap-1.5 sm:gap-2">
-                    <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Icon className={`w-4 h-4 transition-all duration-300 ${isActive ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' : 'text-slate-400'}`} />
                     {tab.label}
                   </span>
                 </motion.button>
@@ -241,16 +259,16 @@ function App() {
             })}
           </nav>
 
-          {/* Slider Right Arrow for Mobile / Tablet */}
+          {/* Slider Right Arrow */}
           <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.12, y: -1 }}
+            whileTap={{ scale: 0.92 }}
             onClick={() => scrollNav('right')}
-            className="ml-1 sm:ml-2 p-2 rounded-full glass-pill text-slate-300 hover:text-white hover:border-emerald-400/50 shadow-lg flex-shrink-0 cursor-pointer lg:hidden z-10 pointer-events-auto"
+            className="ml-2 p-2.5 rounded-full bg-[#1e293b]/95 text-slate-300 hover:text-white hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.35)] border border-[#334155] shadow-lg flex-shrink-0 cursor-pointer lg:hidden z-10 pointer-events-auto transition-all btn-shimmer"
             title="Deslizar hacia la derecha"
             aria-label="Deslizar a la derecha"
           >
-            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-200" />
           </motion.button>
 
         </div>
@@ -260,10 +278,10 @@ function App() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className="w-full transform-gpu"
             >
               {activeTab === 'theory' && <TheoryTab />}
@@ -274,34 +292,40 @@ function App() {
               
               {activeTab === 'simulations' && (
                 <div className="space-y-8">
-                  <div className="glass-panel p-8 rounded-3xl text-center w-full max-w-5xl mx-auto">
-                    <h2 className="text-3xl font-bold text-white mb-3 flex items-center justify-center gap-3">
-                      <Beaker className="w-8 h-8 text-emerald-400" />
+                  <div className="bg-[#1e293b] p-6 sm:p-8 rounded-3xl text-center w-full max-w-5xl mx-auto border border-[#334155] shadow-lg">
+                    <div className="inline-flex p-3 bg-blue-950/60 text-blue-300 rounded-2xl mb-3 border border-blue-800/40 shadow-xs">
+                      <Beaker className="w-7 h-7 sm:w-8 sm:h-8" />
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-2">
                       Simulaciones y Gráficos por Clúster
                     </h2>
-                    <p className="text-slate-300 text-base md:text-lg font-light leading-relaxed">
-                      Nube de puntos de dispersión real con la curva del modelo potencial <strong className="text-emerald-300">y = a · x^b</strong> superpuesta para cada uno de los 4 grupos biológicos (22 especies por grupo, 88 en total).
+                    <p className="text-slate-300 text-sm sm:text-base md:text-lg font-normal leading-relaxed max-w-3xl mx-auto">
+                      Dispersión de observaciones empíricas reales con la curva del modelo potencial{' '}
+                      <span className="font-semibold text-slate-100 px-2 py-0.5 bg-[#1a2436] rounded-md border border-[#334155]">
+                        y = a · x^b
+                      </span>{' '}
+                      superpuesta para cada uno de los 4 grupos biológicos (22 especies por grupo, 88 en total).
                     </p>
                   </div>
 
                   {loading && (
-                    <div className="flex flex-col justify-center items-center py-32 space-y-4">
+                    <div className="flex flex-col justify-center items-center py-28 space-y-4">
                       <div className="relative">
-                        <div className="w-16 h-16 border-4 border-emerald-500/20 rounded-full"></div>
-                        <div className="w-16 h-16 border-4 border-emerald-500 rounded-full border-t-transparent animate-spin absolute top-0 left-0"></div>
+                        <div className="w-14 h-14 border-4 border-slate-700 rounded-full"></div>
+                        <div className="w-14 h-14 border-4 border-blue-500 rounded-full border-t-transparent animate-spin absolute top-0 left-0"></div>
                       </div>
-                      <p className="text-emerald-400 font-medium animate-pulse">Procesando y calculando mínimos cuadrados...</p>
+                      <p className="text-slate-300 font-medium animate-pulse">Procesando y calculando mínimos cuadrados...</p>
                     </div>
                   )}
 
                   {error && (
-                    <div className="bg-rose-500/10 text-rose-200 p-8 rounded-2xl border border-rose-500/20 shadow-lg max-w-4xl mx-auto flex items-start gap-4">
-                      <div className="p-3 bg-rose-500/20 rounded-full">
-                        <Activity className="w-6 h-6 text-rose-400" />
+                    <div className="bg-rose-950/40 text-rose-200 p-6 sm:p-8 rounded-2xl border border-rose-800/50 shadow-xs max-w-4xl mx-auto flex items-start gap-4">
+                      <div className="p-2.5 bg-rose-900/60 rounded-xl text-rose-300 flex-shrink-0">
+                        <Activity className="w-6 h-6" />
                       </div>
                       <div>
-                        <strong className="font-bold text-xl block mb-2 text-rose-400">Error de conexión al Backend</strong>
-                        <p className="text-rose-200/80">{error}</p>
+                        <strong className="font-bold text-lg block mb-1 text-rose-100">Error de conexión al Backend</strong>
+                        <p className="text-rose-300 text-sm">{error}</p>
                       </div>
                     </div>
                   )}

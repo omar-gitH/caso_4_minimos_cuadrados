@@ -26,38 +26,46 @@ html {
 }
 
 body {
-  background-color: #020617;
-  color: #e2e8f0;
+  background-color: #0f172a;
+  background-image: 
+    radial-gradient(at 10% 15%, rgba(56, 189, 248, 0.05) 0px, transparent 40%),
+    radial-gradient(at 90% 85%, rgba(99, 102, 241, 0.05) 0px, transparent 40%),
+    radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.02) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: #f1f5f9;
   font-family: var(--font-sans);
   overflow-x: clip;
 }
 
 ::selection {
-  background-color: rgba(16, 185, 129, 0.3);
-  color: #a7f3d0;
+  background-color: rgba(56, 189, 248, 0.35);
+  color: #ffffff;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
 }
 
-/* Cross-browser hardware-accelerated glassmorphism */
+/* Modern Slate Card Panels with WebKit Fallback */
 .glass-panel {
-  background-color: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
-  transform: translateZ(0);
+  background-color: rgba(30, 41, 59, 0.88);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 
+    0 4px 24px -1px rgba(0, 0, 0, 0.28),
+    0 1px 2px 0 rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
 }
 
 .glass-pill {
-  background-color: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
+  background-color: rgba(30, 41, 59, 0.92);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  transform: translateZ(0);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
 }
 
 /* Touch-friendly horizontal slider utilities */
@@ -78,36 +86,36 @@ h1, h2, h3, h4, h5, h6 {
   scroll-behavior: smooth;
   touch-action: auto !important;
   scrollbar-width: thin;
-  scrollbar-color: rgba(52, 211, 153, 0.5) rgba(15, 23, 42, 0.7);
+  scrollbar-color: rgba(148, 163, 184, 0.4) #1e293b;
 }
 
 .table-scroll-2d::-webkit-scrollbar {
-  width: 8px !important;
-  height: 8px !important;
+  width: 7px !important;
+  height: 7px !important;
   display: block !important;
 }
 
 .table-scroll-2d::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.85);
-  border-radius: 8px;
+  background: #1e293b;
+  border-radius: 6px;
 }
 
 .table-scroll-2d::-webkit-scrollbar-thumb {
-  background: rgba(52, 211, 153, 0.45);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 6px;
+  border: 1px solid #334155;
   transition: background-color 0.2s ease;
 }
 
 .table-scroll-2d::-webkit-scrollbar-thumb:hover {
-  background: rgba(52, 211, 153, 0.8);
+  background: rgba(203, 213, 225, 0.5);
 }
 
 .table-scroll-2d::-webkit-scrollbar-corner {
-  background: rgba(15, 23, 42, 0.85);
+  background: #1e293b;
 }
 
-/* Hide scrollbar utility for sleek mobile app feel */
+/* Hide scrollbar utility */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -116,57 +124,82 @@ h1, h2, h3, h4, h5, h6 {
   scrollbar-width: none;
 }
 
-/* Shimmer Button Effect */
-.shimmer-btn {
+/* Surprising Button Animations: Shimmer, Glow & Micro-Lift */
+@keyframes buttonSweep {
+  0% {
+    transform: translateX(-160%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+
+.btn-shimmer {
   position: relative;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
-.shimmer-btn::after {
+.btn-shimmer::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
   background: linear-gradient(
-    60deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.08) 35%,
-    rgba(255, 255, 255, 0.15) 50%,
-    transparent 65%
+    90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.22) 50%, 
+    rgba(255, 255, 255, 0) 100%
   );
-  transform: translateX(-100%) rotate(25deg);
-  transition: transform 0.6s ease;
+  transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
 }
 
-.shimmer-btn:hover::after {
-  transform: translateX(100%) rotate(25deg);
+.btn-shimmer:hover::before {
+  opacity: 1;
+  animation: buttonSweep 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Neon Glow Accents */
-.glow-emerald {
-  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.4);
-}
-
-.glow-cyan {
-  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.4);
-}
-
+/* Glow Shadows for Category Highlights */
 .glow-amber {
-  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 20px -3px rgba(245, 158, 11, 0.38);
+}
+
+.glow-sky {
+  box-shadow: 0 0 20px -3px rgba(56, 189, 248, 0.38);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 20px -3px rgba(52, 211, 153, 0.38);
 }
 
 .glow-indigo {
-  box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 20px -3px rgba(129, 140, 248, 0.38);
 }
 
-/* Custom sleek scrollbar for Chrome, Edge, Safari, Opera GX & Firefox */
+.glow-blue {
+  box-shadow: 0 0 24px -2px rgba(37, 99, 235, 0.45);
+}
+
+/* Subtle clean shadows for projector & OLED clarity */
+.shadow-card {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.25), 0 1px 3px -1px rgba(0, 0, 0, 0.2);
+}
+
+.shadow-elevated {
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.4), 0 6px 12px -3px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom sleek scrollbar for slate mode */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(52, 211, 153, 0.4) rgba(15, 23, 42, 0.6);
+  scrollbar-color: rgba(148, 163, 184, 0.35) #151e2e;
 }
 
 ::-webkit-scrollbar {
@@ -175,67 +208,79 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: #151e2e;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(52, 211, 153, 0.4);
+  background: rgba(148, 163, 184, 0.35);
   border-radius: 9999px;
   transition: background-color 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(52, 211, 153, 0.8);
+  background: rgba(203, 213, 225, 0.55);
+}
+
+/* KaTeX Global Styling & Spacing: High Contrast & Generous Breathability */
+.katex {
+  color: #f8fafc !important;
+  font-size: 1.05em;
+  text-rendering: geometricPrecision;
+}
+
+.katex-display {
+  margin: 1.1em 0 !important;
+  padding: 0.25em 0;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.katex-display > .katex {
+  font-size: 1.15em !important;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 /* Responsive boundary and typography rules across devices */
 @media (max-width: 640px) {
-  /* Celulares: asegurar márgenes seguros sin desbordamientos */
   .glass-panel {
     padding: 1rem !important;
-    border-radius: 1.25rem !important;
+    border-radius: 1rem !important;
   }
   
   .katex-display {
-    font-size: 0.85em !important;
-    margin: 0.4em 0 !important;
+    font-size: 0.9em !important;
+    margin: 0.8em 0 !important;
     max-width: 100% !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    -webkit-overflow-scrolling: touch;
   }
 
   .katex {
-    font-size: 0.92em !important;
-    max-width: 100% !important;
+    font-size: 0.96em !important;
   }
 }
 
 @media (max-width: 480px) {
-  /* Celulares angostos: evitar que fórmulas o cards ensanchen la pantalla */
   .glass-panel {
     padding: 0.875rem !important;
-    border-radius: 1rem !important;
+    border-radius: 0.875rem !important;
   }
 
   .katex-display {
-    font-size: 0.78em !important;
-    margin: 0.25em 0 !important;
-    max-width: 100% !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
+    font-size: 0.84em !important;
+    margin: 0.7em 0 !important;
   }
 
   .katex {
-    font-size: 0.85em !important;
+    font-size: 0.9em !important;
   }
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
-  /* Tablets y pantallas medianas */
   .glass-panel {
-    padding: 1.75rem !important;
-    border-radius: 1.5rem !important;
+    padding: 1.5rem !important;
+    border-radius: 1.25rem !important;
   }
 }
