@@ -53,6 +53,28 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'theory' | 'models' | 'procedure' | 'simulations' | 'conclusions'>('theory');
   const navRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLElement>(null);
+  const navContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleTabChange = (tabId: typeof activeTab) => {
+    setActiveTab(tabId);
+
+    if (contentRef.current) {
+      // Posición absoluta del inicio del contenido en la página
+      const contentTop = contentRef.current.getBoundingClientRect().top + window.scrollY;
+      // Altura del HUD de navegación flotante más margen de respiro
+      const navOffset = (navContainerRef.current?.offsetHeight ?? 54) + 20;
+      const targetScroll = Math.max(0, contentTop - navOffset);
+
+      // Si el usuario scrolleó hacia abajo y la barra fija está arriba de todo
+      if (window.scrollY > targetScroll) {
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'smooth',
+        });
+      }
+    }
+  };
 
   const scrollNav = (direction: 'left' | 'right') => {
     if (navRef.current) {
@@ -170,14 +192,17 @@ function App() {
         </motion.header>
 
         {/* Floating Futuristic HUD Tab Navigation with Horizontal Slider for Mobile & Tablet */}
-        <div className="sticky top-3 sm:top-4 z-50 flex items-center justify-center w-full max-w-full px-1 sm:px-4">
+        <div 
+          ref={navContainerRef}
+          className="sticky top-3 sm:top-4 z-50 flex items-center justify-center w-full max-w-full px-1 sm:px-4 pointer-events-none"
+        >
           
           {/* Slider Left Arrow for Mobile / Tablet */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => scrollNav('left')}
-            className="mr-1 sm:mr-2 p-2 rounded-full glass-pill text-slate-300 hover:text-white hover:border-emerald-400/50 shadow-lg flex-shrink-0 cursor-pointer lg:hidden z-10"
+            className="mr-1 sm:mr-2 p-2 rounded-full glass-pill text-slate-300 hover:text-white hover:border-emerald-400/50 shadow-lg flex-shrink-0 cursor-pointer lg:hidden z-10 pointer-events-auto"
             title="Deslizar hacia la izquierda"
             aria-label="Deslizar a la izquierda"
           >
@@ -186,7 +211,7 @@ function App() {
 
           <nav 
             ref={navRef}
-            className="flex space-x-1.5 sm:space-x-2 glass-pill p-1.5 sm:p-2 rounded-full overflow-x-auto slider-touch no-scrollbar max-w-full touch-pan-x scroll-smooth shadow-2xl"
+            className="flex space-x-1.5 sm:space-x-2 glass-pill p-1.5 sm:p-2 rounded-full overflow-x-auto slider-touch no-scrollbar max-w-full touch-pan-x scroll-smooth shadow-2xl pointer-events-auto"
           >
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -196,7 +221,7 @@ function App() {
                   key={tab.id}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.96 }}
-                  onClick={() => setActiveTab(tab.id as any)}
+                  onClick={() => handleTabChange(tab.id)}
                   className={`relative flex items-center gap-1.5 sm:gap-2 py-2 sm:py-2.5 px-3.5 sm:px-5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap outline-none cursor-pointer flex-shrink-0 shimmer-btn
                     ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}`}
                 >
@@ -221,7 +246,7 @@ function App() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => scrollNav('right')}
-            className="ml-1 sm:ml-2 p-2 rounded-full glass-pill text-slate-300 hover:text-white hover:border-emerald-400/50 shadow-lg flex-shrink-0 cursor-pointer lg:hidden z-10"
+            className="ml-1 sm:ml-2 p-2 rounded-full glass-pill text-slate-300 hover:text-white hover:border-emerald-400/50 shadow-lg flex-shrink-0 cursor-pointer lg:hidden z-10 pointer-events-auto"
             title="Deslizar hacia la derecha"
             aria-label="Deslizar a la derecha"
           >
@@ -231,7 +256,7 @@ function App() {
         </div>
 
         {/* Main Content Area */}
-        <main className="relative min-h-[600px] w-full mt-4">
+        <main ref={contentRef} className="relative min-h-[600px] w-full mt-4 scroll-mt-24">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
