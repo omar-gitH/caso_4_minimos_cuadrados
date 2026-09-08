@@ -1,6 +1,7 @@
 import React from 'react';
 import { BookOpen, Target, CheckCircle2, Flame, Layers } from 'lucide-react';
 import { BlockMath, InlineMath } from 'react-katex';
+import { SpeciesDataTable } from './SpeciesDataTable';
 
 export const TheoryTab: React.FC = () => {
   return (
@@ -89,6 +90,9 @@ export const TheoryTab: React.FC = () => {
           </ul>
         </div>
       </div>
+
+      {/* Tabla Oficial Completa de Datos (88 Especies) */}
+      <SpeciesDataTable />
 
       {/* Fundamento Biológico y Físico */}
       <div className="space-y-6">

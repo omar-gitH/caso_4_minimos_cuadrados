@@ -70,6 +70,43 @@ h1, h2, h3, h4, h5, h6 {
   overscroll-behavior-x: contain;
 }
 
+/* 2D Touch-friendly scrollable container for data tables (Vertical & Horizontal) */
+.table-scroll-2d {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  touch-action: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(52, 211, 153, 0.5) rgba(15, 23, 42, 0.7);
+}
+
+.table-scroll-2d::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+  display: block !important;
+}
+
+.table-scroll-2d::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 8px;
+}
+
+.table-scroll-2d::-webkit-scrollbar-thumb {
+  background: rgba(52, 211, 153, 0.45);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.table-scroll-2d::-webkit-scrollbar-thumb:hover {
+  background: rgba(52, 211, 153, 0.8);
+}
+
+.table-scroll-2d::-webkit-scrollbar-corner {
+  background: rgba(15, 23, 42, 0.85);
+}
+
 /* Hide scrollbar utility for sleek mobile app feel */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
