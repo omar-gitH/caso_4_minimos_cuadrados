@@ -7,6 +7,8 @@ import { ClusterChart } from './components/ClusterChart';
 import { ConclusionsTab } from './components/ConclusionsTab';
 import { Activity, Beaker, BookOpen, ListChecks, Scale, Award, Sparkles, Database, GitBranch, ChevronLeft, ChevronRight } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 interface FitData {
   cluster: string;
   data_points: { x: number; y: number; especie: string }[];
@@ -39,8 +41,6 @@ interface FitData {
     }[];
   };
 }
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const CLUSTER_INFO: Record<string, { title: string; color: string }> = {
   MAM: { title: 'Mamíferos', color: '#f59e0b' },
@@ -97,7 +97,7 @@ function App() {
         setLoading(false);
       })
       .catch(() => {
-        setError('Error conectando al backend de FastAPI. Asegúrate de que está corriendo en el puerto 8000.');
+        setError(`Error conectando al backend de FastAPI (${API_URL}). Asegúrate de que el servidor esté activo.`);
         setLoading(false);
       });
   }, []);
