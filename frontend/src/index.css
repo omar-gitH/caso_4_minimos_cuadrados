@@ -27,7 +27,7 @@ html {
 
 body {
   background-color: #0f172a;
-  background-image: 
+  background-image:
     radial-gradient(at 10% 15%, rgba(56, 189, 248, 0.05) 0px, transparent 40%),
     radial-gradient(at 90% 85%, rgba(99, 102, 241, 0.05) 0px, transparent 40%),
     radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.02) 0px, transparent 50%);
@@ -42,7 +42,12 @@ body {
   color: #ffffff;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
 }
 
@@ -52,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: 
+  box-shadow:
     0 4px 24px -1px rgba(0, 0, 0, 0.28),
     0 1px 2px 0 rgba(0, 0, 0, 0.16),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
@@ -63,7 +68,7 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.36),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
 }
@@ -119,6 +124,7 @@ h1, h2, h3, h4, h5, h6 {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -129,6 +135,7 @@ h1, h2, h3, h4, h5, h6 {
   0% {
     transform: translateX(-160%) skewX(-20deg);
   }
+
   100% {
     transform: translateX(260%) skewX(-20deg);
   }
@@ -149,12 +156,10 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 55%;
   height: 100%;
-  background: linear-gradient(
-    90deg, 
-    rgba(255, 255, 255, 0) 0%, 
-    rgba(255, 255, 255, 0.22) 50%, 
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.22) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transform: translateX(-160%) skewX(-20deg);
   pointer-events: none;
   opacity: 0;
@@ -222,26 +227,62 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(203, 213, 225, 0.55);
 }
 
-/* KaTeX Global Styling & Spacing: High Contrast & Generous Breathability */
+/* KaTeX Global Styling & Spacing: Generous Breathability, Uncompacted & Crisp */
+.katex,
+.katex *,
+.katex *::before,
+.katex *::after {
+  box-sizing: content-box !important;
+}
+
 .katex {
   color: #f8fafc !important;
-  font-size: 1.05em;
-  text-rendering: geometricPrecision;
+  font-size: 1.14em !important;
+  line-height: 1.25 !important;
+  text-indent: 0;
+  text-rendering: auto;
+  white-space: normal;
+  margin-left: 0.12em;
+  margin-right: 0.12em;
 }
 
 .katex-display {
-  margin: 1.1em 0 !important;
-  padding: 0.25em 0;
+  margin: 1.5em 0 !important;
+  padding: 0.8em 0.5em !important;
   max-width: 100% !important;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch;
+  display: block;
 }
 
 .katex-display > .katex {
-  font-size: 1.15em !important;
+  font-size: 1.3em !important;
   display: inline-block;
   white-space: nowrap;
+  margin: 0 auto;
+}
+
+/* Ensure fractions, superscripts/subscripts and matrices never collide */
+.katex .mfrac {
+  padding: 0.3em 0 !important;
+}
+
+.katex .mfrac .frac-line {
+  border-bottom-width: 1.5px !important;
+}
+
+.katex .msupsub {
+  text-align: left;
+}
+
+.katex .arraycolsep {
+  margin-left: 0.5em !important;
+  margin-right: 0.5em !important;
+}
+
+.katex .matrix, .katex .cases, .katex .aligned {
+  line-height: 1.8 !important;
 }
 
 /* Responsive boundary and typography rules across devices */
@@ -250,15 +291,16 @@ h1, h2, h3, h4, h5, h6 {
     padding: 1rem !important;
     border-radius: 1rem !important;
   }
-  
+
   .katex-display {
-    font-size: 0.9em !important;
-    margin: 0.8em 0 !important;
+    font-size: 1.05em !important;
+    margin: 1.1em 0 !important;
+    padding: 0.5em 0.25em !important;
     max-width: 100% !important;
   }
 
   .katex {
-    font-size: 0.96em !important;
+    font-size: 1.06em !important;
   }
 }
 
@@ -269,12 +311,12 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .katex-display {
-    font-size: 0.84em !important;
-    margin: 0.7em 0 !important;
+    font-size: 0.96em !important;
+    margin: 0.9em 0 !important;
   }
 
   .katex {
-    font-size: 0.9em !important;
+    font-size: 1em !important;
   }
 }
 

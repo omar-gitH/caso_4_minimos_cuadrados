@@ -67,26 +67,26 @@ export const ClusterChart: React.FC<ClusterChartProps> = ({
         <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full shadow-xs" style={{ backgroundColor: color }}></div>
         {title}
       </h3>
-      
+
       <div className="h-[340px] sm:h-[400px] w-full bg-[#1a2436] rounded-xl p-1 sm:p-4 border border-[#334155]">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart margin={{ top: 10, right: 10, bottom: 20, left: 10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-            <XAxis 
-              dataKey="x" 
-              type="number" 
-              name="Masa" 
+            <XAxis
+              dataKey="x"
+              type="number"
+              name="Masa"
               scale="log"
               domain={['auto', 'auto']}
               label={{ value: 'Masa (kg)', position: 'insideBottom', offset: -15, fill: '#cbd5e1', fontSize: 12, fontWeight: 500 }}
               tick={{ fontSize: 12, fill: '#94a3b8' }}
-              tickFormatter={(val) => val >= 1000 ? `${val/1000}k` : val}
+              tickFormatter={(val) => val >= 1000 ? `${val / 1000}k` : val}
               stroke="#64748b"
             />
-            <YAxis 
-              dataKey="y" 
-              type="number" 
-              name="Metabolismo" 
+            <YAxis
+              dataKey="y"
+              type="number"
+              name="Metabolismo"
               scale="log"
               domain={['auto', 'auto']}
               label={{ value: 'Tasa Metabólica (W)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' }, fill: '#cbd5e1', offset: -10, fontSize: 12, fontWeight: 500 }}
@@ -94,21 +94,21 @@ export const ClusterChart: React.FC<ClusterChartProps> = ({
               stroke="#64748b"
             />
             <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3', stroke: '#64748b' }} />
-            
+
             {/* Puntos experimentales */}
-            <Scatter 
-              name="Datos Experimentales" 
-              data={dataPoints} 
+            <Scatter
+              name="Datos Experimentales"
+              data={dataPoints}
               fill={color}
               r={6}
             />
-            
+
             {/* Curva de ajuste */}
-            <Line 
-              data={curvePoints} 
-              type="monotone" 
-              dataKey="y" 
-              stroke="#f1f5f9" 
+            <Line
+              data={curvePoints}
+              type="monotone"
+              dataKey="y"
+              stroke="#f1f5f9"
               strokeWidth={3}
               dot={false}
               activeDot={false}

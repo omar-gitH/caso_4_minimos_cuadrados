@@ -56,7 +56,7 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
 
   return (
     <div className="bg-[#1e293b] p-4 sm:p-8 md:p-12 rounded-3xl shadow-lg border border-[#334155] w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10">
-      
+
       {/* Header */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-[#334155] pb-8">
         <div className="flex items-center gap-4">
@@ -86,9 +86,8 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
                 whileHover={{ scale: 1.05, y: -1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCluster(c.id)}
-                className={`relative px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer flex-shrink-0 btn-shimmer ${
-                  isSelected ? 'text-white font-bold' : 'text-slate-400 hover:text-slate-200 hover:bg-[#1e293b]/60'
-                }`}
+                className={`relative px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer flex-shrink-0 btn-shimmer ${isSelected ? 'text-white font-bold' : 'text-slate-400 hover:text-slate-200 hover:bg-[#1e293b]/60'
+                  }`}
               >
                 {isSelected && (
                   <motion.div
@@ -103,12 +102,12 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
                   />
                 )}
                 <span className="relative z-10 flex items-center gap-2">
-                  <span 
-                    className="w-2.5 h-2.5 rounded-full transition-transform duration-200" 
-                    style={{ 
-                      backgroundColor: c.color, 
-                      boxShadow: isSelected ? `0 0 10px ${c.color}` : 'none' 
-                    }} 
+                  <span
+                    className="w-2.5 h-2.5 rounded-full transition-transform duration-200"
+                    style={{
+                      backgroundColor: c.color,
+                      boxShadow: isSelected ? `0 0 10px ${c.color}` : 'none'
+                    }}
                   />
                   {c.name}
                 </span>
@@ -133,55 +132,54 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
       <div className="space-y-1">
         <div className="overflow-x-auto slider-touch rounded-2xl border border-[#334155] bg-[#1a2436] shadow-xs">
           <table className="w-full text-left border-collapse text-sm md:text-base min-w-[650px]">
-          <thead>
-            <tr className="bg-[#243147] border-b border-[#334155] text-slate-300 uppercase text-xs tracking-wider font-semibold">
-              <th className="p-4">Modelo</th>
-              <th className="p-4">Fórmula General</th>
-              <th className="p-4">Ecuación Obtenida</th>
-              <th className="p-4 text-center">Bondad (r²)</th>
-              <th className="p-4 text-center">Residuo (Sr)</th>
-              <th className="p-4">Evaluación y Diagnóstico</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[#334155] text-slate-300 font-normal">
-            {modelComparison.map((m, idx) => (
-              <tr 
-                key={idx} 
-                className={`transition-colors ${m.es_optimo ? 'bg-emerald-950/30 hover:bg-emerald-950/45' : 'hover:bg-[#243147]/50'}`}
-              >
-                <td className="p-4 font-bold text-slate-100 flex items-center gap-2">
-                  {m.es_optimo ? (
-                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
-                  ) : (
-                    <XCircle className="w-5 h-5 text-rose-400 flex-shrink-0" />
-                  )}
-                  {m.modelo}
-                </td>
-                <td className="p-4 text-slate-300 font-mono text-sm">
-                  <InlineMath math={m.formula_general} />
-                </td>
-                <td className="p-4 font-mono text-xs md:text-sm text-slate-100 font-semibold">
-                  <InlineMath math={m.ecuacion} />
-                </td>
-                <td className="p-4 text-center">
-                  <span className={`font-mono font-bold px-2.5 py-1 rounded-full text-xs md:text-sm ${
-                    m.r2 >= 0.90 ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-800/40' :
-                    m.r2 >= 0.70 ? 'bg-amber-950/40 text-amber-300 border border-amber-800/40' :
-                    'bg-rose-950/40 text-rose-300 border border-rose-800/40'
-                  }`}>
-                    {m.r2 < -99 ? '<< 0' : m.r2.toFixed(4)}
-                  </span>
-                </td>
-                <td className="p-4 text-center font-mono text-xs text-slate-400">
-                  {m.sr > 100000 ? '> 100,000' : m.sr.toFixed(2)}
-                </td>
-                <td className="p-4 text-xs md:text-sm leading-relaxed text-slate-300">
-                  {m.justificacion}
-                </td>
+            <thead>
+              <tr className="bg-[#243147] border-b border-[#334155] text-slate-300 uppercase text-xs tracking-wider font-semibold">
+                <th className="p-4">Modelo</th>
+                <th className="p-4">Fórmula General</th>
+                <th className="p-4">Ecuación Obtenida</th>
+                <th className="p-4 text-center">Bondad (r²)</th>
+                <th className="p-4 text-center">Residuo (Sr)</th>
+                <th className="p-4">Evaluación y Diagnóstico</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-[#334155] text-slate-300 font-normal">
+              {modelComparison.map((m, idx) => (
+                <tr
+                  key={idx}
+                  className={`transition-colors ${m.es_optimo ? 'bg-emerald-950/30 hover:bg-emerald-950/45' : 'hover:bg-[#243147]/50'}`}
+                >
+                  <td className="p-4 font-bold text-slate-100 flex items-center gap-2">
+                    {m.es_optimo ? (
+                      <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                    ) : (
+                      <XCircle className="w-5 h-5 text-rose-400 flex-shrink-0" />
+                    )}
+                    {m.modelo}
+                  </td>
+                  <td className="p-4 text-slate-300 font-mono text-sm">
+                    <InlineMath math={m.formula_general} />
+                  </td>
+                  <td className="p-4 font-mono text-xs md:text-sm text-slate-100 font-semibold">
+                    <InlineMath math={m.ecuacion} />
+                  </td>
+                  <td className="p-4 text-center">
+                    <span className={`font-mono font-bold px-2.5 py-1 rounded-full text-xs md:text-sm ${m.r2 >= 0.90 ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-800/40' :
+                        m.r2 >= 0.70 ? 'bg-amber-950/40 text-amber-300 border border-amber-800/40' :
+                          'bg-rose-950/40 text-rose-300 border border-rose-800/40'
+                      }`}>
+                      {m.r2 < -99 ? '<< 0' : m.r2.toFixed(4)}
+                    </span>
+                  </td>
+                  <td className="p-4 text-center font-mono text-xs text-slate-400">
+                    {m.sr > 100000 ? '> 100,000' : m.sr.toFixed(2)}
+                  </td>
+                  <td className="p-4 text-xs md:text-sm leading-relaxed text-slate-300">
+                    {m.justificacion}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -204,9 +202,8 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.96 }}
               onClick={() => setUseLogResiduals(true)}
-              className={`relative px-3.5 py-2 rounded-lg font-semibold transition-all cursor-pointer btn-shimmer ${
-                useLogResiduals ? 'text-white font-bold' : 'text-slate-400 hover:text-slate-200'
-              }`}
+              className={`relative px-3.5 py-2 rounded-lg font-semibold transition-all cursor-pointer btn-shimmer ${useLogResiduals ? 'text-white font-bold' : 'text-slate-400 hover:text-slate-200'
+                }`}
             >
               {useLogResiduals && (
                 <motion.div
@@ -221,9 +218,8 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.96 }}
               onClick={() => setUseLogResiduals(false)}
-              className={`relative px-3.5 py-2 rounded-lg font-semibold transition-all cursor-pointer btn-shimmer ${
-                !useLogResiduals ? 'text-white font-bold' : 'text-slate-400 hover:text-slate-200'
-              }`}
+              className={`relative px-3.5 py-2 rounded-lg font-semibold transition-all cursor-pointer btn-shimmer ${!useLogResiduals ? 'text-white font-bold' : 'text-slate-400 hover:text-slate-200'
+                }`}
             >
               {!useLogResiduals && (
                 <motion.div
@@ -242,34 +238,34 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
           <ResponsiveContainer width="100%" height="100%">
             <ScatterChart margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis 
-                dataKey="x" 
-                type="number" 
+              <XAxis
+                dataKey="x"
+                type="number"
                 name="Masa"
                 scale="log"
                 domain={['auto', 'auto']}
                 label={{ value: 'Masa corporal (kg) [Escala Logarítmica]', position: 'insideBottom', offset: -12, fill: '#cbd5e1' }}
                 tick={{ fill: '#94a3b8', fontSize: 12 }}
-                tickFormatter={(val) => val >= 1000 ? `${val/1000}k` : val}
+                tickFormatter={(val) => val >= 1000 ? `${val / 1000}k` : val}
                 stroke="#64748b"
               />
-              <YAxis 
-                dataKey={useLogResiduals ? "log_residual" : "residual"} 
-                type="number" 
+              <YAxis
+                dataKey={useLogResiduals ? "log_residual" : "residual"}
+                type="number"
                 name="Residuo"
-                label={{ 
-                  value: useLogResiduals ? 'Residuo en ln: [ln(y) - ln(ŷ)]' : 'Residuo (W): [y - ŷ]', 
-                  angle: -90, 
-                  position: 'insideLeft', 
-                  style: { textAnchor: 'middle' }, 
-                  fill: '#cbd5e1', 
-                  offset: -10 
+                label={{
+                  value: useLogResiduals ? 'Residuo en ln: [ln(y) - ln(ŷ)]' : 'Residuo (W): [y - ŷ]',
+                  angle: -90,
+                  position: 'insideLeft',
+                  style: { textAnchor: 'middle' },
+                  fill: '#cbd5e1',
+                  offset: -10
                 }}
                 tick={{ fill: '#94a3b8', fontSize: 12 }}
                 stroke="#64748b"
               />
               <ReferenceLine y={0} stroke="#10b981" strokeWidth={2} strokeDasharray="4 4" />
-              <Tooltip 
+              <Tooltip
                 content={({ active, payload }) => {
                   if (active && payload && payload.length) {
                     const d = payload[0].payload;
@@ -288,10 +284,10 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
                   return null;
                 }}
               />
-              <Scatter 
-                data={residuals} 
-                fill="#38bdf8" 
-                r={6} 
+              <Scatter
+                data={residuals}
+                fill="#38bdf8"
+                r={6}
               />
             </ScatterChart>
           </ResponsiveContainer>

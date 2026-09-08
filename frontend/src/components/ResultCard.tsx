@@ -44,7 +44,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) =>
 
         {/* Horizontal Slider with Touch & Navigation Controls for Smaller Screens */}
         <div className="relative w-full my-1">
-          <div 
+          <div
             ref={eqScrollRef}
             className="w-full overflow-x-auto slider-touch no-scrollbar sm:custom-scrollbar py-2"
           >
@@ -85,7 +85,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) =>
           </div>
         )}
       </div>
-      
+
       {/* Bondad del Ajuste */}
       <div className={`rounded-2xl p-5 border ${borderClass} ${bgClass} flex flex-col justify-between shadow-xs relative`}>
         <div className="flex items-center justify-between mb-2">

@@ -6,7 +6,7 @@ import { SpeciesDataTable } from './SpeciesDataTable';
 export const TheoryTab: React.FC = () => {
   return (
     <div className="bg-[#1e293b] p-4 sm:p-8 md:p-12 rounded-3xl shadow-lg border border-[#334155] w-full max-w-6xl xl:max-w-7xl mx-auto space-y-10">
-      
+
       {/* Header */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-[#334155] pb-8">
         <div className="flex items-center gap-4">
@@ -100,18 +100,18 @@ export const TheoryTab: React.FC = () => {
           <Flame className="w-6 h-6 text-amber-400" />
           Fundamentación Alométrica: ¿Por qué la relación no es lineal?
         </h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 bg-[#243147] rounded-2xl border border-[#334155] space-y-3 shadow-xs">
-            <h4 className="text-base sm:text-lg font-bold text-amber-300">1. Geometría y Disipación de Calor (M^{2/3})</h4>
+            <h4 className="text-base sm:text-lg font-bold text-amber-300">1. Geometría y Disipación de Calor (M^{2 / 3})</h4>
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-normal">
-              Si un animal duplicara su tamaño manteniendo el metabolismo directamente proporcional a su masa (<InlineMath math="b = 1" />), su masa y volumen de células crecerían en proporción al cubo (<InlineMath math="L^3" />), pero su superficie para disipar calor solo crecería al cuadrado (<InlineMath math="L^2" />). 
+              Si un animal duplicara su tamaño manteniendo el metabolismo directamente proporcional a su masa (<InlineMath math="b = 1" />), su masa y volumen de células crecerían en proporción al cubo (<InlineMath math="L^3" />), pero su superficie para disipar calor solo crecería al cuadrado (<InlineMath math="L^2" />).
               Consecuencia: Un animal grande como un elefante se sobrecalentaría instantáneamente hasta hervir sus tejidos.
             </p>
           </div>
 
           <div className="p-6 bg-[#243147] rounded-2xl border border-[#334155] space-y-3 shadow-xs">
-            <h4 className="text-base sm:text-lg font-bold text-blue-300">2. Redes Fractales de Transporte y Ley de Kleiber (M^{3/4})</h4>
+            <h4 className="text-base sm:text-lg font-bold text-blue-300">2. Redes Fractales de Transporte y Ley de Kleiber (M^{3 / 4})</h4>
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-normal">
               El biólogo Max Kleiber descubrió empíricamente en 1932 que la tasa metabólica escala con un exponente cercano a <InlineMath math="b \approx 0.75" /> (<InlineMath math="3/4" />). Posteriormente, los físicos West, Brown y Enquist demostraron que esta regla se deriva de las redes fractales ramificadas (sistema circulatorio y respiratorio) que distribuyen nutrientes y oxígeno limitando el consumo a gran escala.
             </p>

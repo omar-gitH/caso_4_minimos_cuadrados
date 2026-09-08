@@ -49,7 +49,7 @@ export const ProcedureTab: React.FC = () => {
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-3">
                 Se recopila una muestra discreta de <InlineMath math="n = 22" /> observaciones experimentales por clúster biológico (88 en total), compuestas por la masa corporal (<InlineMath math="x_i" /> en kg) y el metabolismo basal (<InlineMath math="y_i" /> en W):
               </p>
-              
+
               <FormulaCollapse
                 title="Conjunto Discreto de Datos Experimentales"
                 subtitle="Pares ordenados que describen la muestra para cada clúster"
@@ -85,7 +85,7 @@ export const ProcedureTab: React.FC = () => {
                 Para aplicar el método analítico de mínimos cuadrados lineales al modelo no lineal{' '}
                 <span className="font-semibold text-slate-100 px-1.5 py-0.5 bg-[#1a2436] rounded border border-[#334155]"><InlineMath math="y = a \cdot x^b" /></span>, se aplica logaritmo natural en ambos miembros:
               </p>
-              
+
               <FormulaCollapse
                 title="Transformación Logarítmica y Cambio de Variables"
                 subtitle="Equivalencia matemática entre el modelo potencial y la recta lineal"
@@ -133,7 +133,7 @@ export const ProcedureTab: React.FC = () => {
                 <InlineMath math="\frac{\partial \delta}{\partial A} = 0" /> y{' '}
                 <InlineMath math="\frac{\partial \delta}{\partial B} = 0" /> (según el apunte oficial de la cátedra UTN FRP).
               </p>
-              
+
               <FormulaCollapse
                 title="Sistema Matricial de Ecuaciones Normales (2x2)"
                 subtitle="Representación matricial y escalar con nomenclatura rigurosa"
@@ -141,7 +141,7 @@ export const ProcedureTab: React.FC = () => {
                 defaultOpen={true}
               >
                 <div className="w-full max-w-3xl mx-auto flex flex-col gap-6 py-2">
-                  
+
                   {/* Tarjeta 1: Representación Matricial con espaciado vertical entre filas */}
                   <div className="bg-[#1a2436] p-5 sm:p-7 rounded-xl border border-[#334155] shadow-xs">
                     <div className="flex items-center justify-between gap-2 mb-3">
@@ -150,13 +150,13 @@ export const ProcedureTab: React.FC = () => {
                       </span>
                       <span className="text-xs text-slate-400 font-mono">Espaciado de filas: \arraystretch</span>
                     </div>
-                    
+
                     <div className="py-3 overflow-x-auto text-slate-100">
                       <BlockMath
                         math={`\\begin{bmatrix} n & \\sum_{i=1}^{n} X_i \\\\[12pt] \\sum_{i=1}^{n} X_i & \\sum_{i=1}^{n} X_i^2 \\end{bmatrix} \\begin{bmatrix} A \\\\[12pt] b \\end{bmatrix} = \\begin{bmatrix} \\sum_{i=1}^{n} Y_i \\\\[12pt] \\sum_{i=1}^{n} (X_i \\cdot Y_i) \\end{bmatrix}`}
                       />
                     </div>
-                    
+
                     <p className="text-xs text-slate-400 mt-2 text-center">
                       Matriz simétrica definida positiva con determinante no nulo garantizado para datos no degenerados.
                     </p>
@@ -207,7 +207,7 @@ export const ProcedureTab: React.FC = () => {
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-3">
                 Resolviendo el sistema lineal por la Regla de Cramer o eliminación gaussiana directa, se deducen las expresiones explícitas para la pendiente <InlineMath math="b" /> y la constante <InlineMath math="A" />:
               </p>
-              
+
               <FormulaCollapse
                 title="Fórmulas Directas de los Coeficientes"
                 subtitle="Cálculo analítico explícito para la pendiente b y la ordenada al origen A"
@@ -215,8 +215,8 @@ export const ProcedureTab: React.FC = () => {
                 defaultOpen={true}
               >
                 <div className="w-full max-w-3xl mx-auto flex flex-col gap-6 py-2">
-                  
-                  {/* Tarjeta 1: Pendiente b */}
+
+                    {/* Tarjeta 1: Pendiente b */}
                   <div className="bg-[#1a2436] p-5 sm:p-7 rounded-xl border border-[#334155] shadow-xs">
                     <div className="flex items-center justify-between gap-2 mb-3">
                       <span className="text-xs font-bold uppercase tracking-wider bg-emerald-950/60 text-emerald-300 px-3 py-1 rounded-md border border-emerald-800/40">
@@ -225,8 +225,8 @@ export const ProcedureTab: React.FC = () => {
                       <span className="text-xs text-slate-400 font-mono">Regla de Cramer</span>
                     </div>
 
-                    <div className="py-4 text-slate-100 overflow-x-auto">
-                      <BlockMath math="b = \frac{n \sum_{i=1}^{n} (X_i \cdot Y_i) - \left(\sum_{i=1}^{n} X_i\right)\left(\sum_{i=1}^{n} Y_i\right)}{n \sum_{i=1}^{n} X_i^2 - \left(\sum_{i=1}^{n} X_i\right)^2}" />
+                    <div className="py-4 text-slate-100 overflow-x-auto text-center">
+                      <BlockMath math="\displaystyle b = \dfrac{n \sum_{i=1}^{n} (X_i \cdot Y_i) - \left(\sum_{i=1}^{n} X_i\right)\left(\sum_{i=1}^{n} Y_i\right)}{n \sum_{i=1}^{n} X_i^2 - \left(\sum_{i=1}^{n} X_i\right)^2}" />
                     </div>
 
                     <div className="mt-3 p-3 bg-[#1e293b] rounded-lg text-xs text-slate-300 border border-[#334155]">
@@ -243,8 +243,8 @@ export const ProcedureTab: React.FC = () => {
                       <span className="text-xs text-slate-400 font-mono">A = Ȳ - b·X̄</span>
                     </div>
 
-                    <div className="py-4 text-slate-100 overflow-x-auto">
-                      <BlockMath math="A = \frac{\sum_{i=1}^{n} Y_i - b \sum_{i=1}^{n} X_i}{n} = \bar{Y} - b \cdot \bar{X}" />
+                    <div className="py-4 text-slate-100 overflow-x-auto text-center">
+                      <BlockMath math="\displaystyle A = \dfrac{\sum_{i=1}^{n} Y_i - b \sum_{i=1}^{n} X_i}{n} = \bar{Y} - b \cdot \bar{X}" />
                     </div>
 
                     <div className="mt-3 p-3 bg-[#1e293b] rounded-lg text-xs text-slate-300 border border-[#334155]">
@@ -271,7 +271,7 @@ export const ProcedureTab: React.FC = () => {
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-3">
                 Para retornar al espacio biológico original (vatios frente a kilogramos), se aplica la función exponencial inversa sobre la constante <InlineMath math="A" />:
               </p>
-              
+
               <FormulaCollapse
                 title="Recuperación del Parámetro Original y Ecuación Potencial"
                 subtitle="Transformación inversa para obtener 'a' y armar la curva alométrica"
@@ -281,7 +281,7 @@ export const ProcedureTab: React.FC = () => {
                   <div className="bg-[#1a2436] p-5 sm:p-6 rounded-xl border border-[#334155] shadow-xs flex-1 text-center">
                     <span className="text-xs text-slate-400 font-mono block mb-2 uppercase tracking-wider">Recuperación de 'a'</span>
                     <div className="text-slate-100 py-2">
-                      <BlockMath math="a = e^A = \exp(A)" />
+                      <BlockMath math="\displaystyle a = e^A = \exp(A)" />
                     </div>
                     <p className="text-xs text-slate-400 mt-2">Coeficiente basal de escala</p>
                   </div>
@@ -289,7 +289,7 @@ export const ProcedureTab: React.FC = () => {
                   <div className="bg-[#1a2436] p-5 sm:p-6 rounded-xl border border-[#334155] shadow-xs flex-1 text-center">
                     <span className="text-xs text-slate-400 font-mono block mb-2 uppercase tracking-wider">Modelo Potencial Final</span>
                     <div className="text-slate-100 py-2">
-                      <BlockMath math="y(x) = a \cdot x^b" />
+                      <BlockMath math="\displaystyle y(x) = a \cdot x^b" />
                     </div>
                     <p className="text-xs text-slate-400 mt-2">Curva ajustada por mínimos cuadrados</p>
                   </div>
@@ -312,7 +312,7 @@ export const ProcedureTab: React.FC = () => {
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-3">
                 Siguiendo la pauta teórica de la cátedra de Análisis Numérico (UTN FRP), la bondad del ajuste se evalúa descomponiendo la variación total (<InlineMath math="ST" />) frente a la variación residual (<InlineMath math="SR" />):
               </p>
-              
+
               <FormulaCollapse
                 title="Fórmulas de Bondad de Ajuste (r²) y Varianza Residual"
                 subtitle="Descomposición estricta en Suma Total de Cuadrados y Residuo Cuadrático"
@@ -320,7 +320,7 @@ export const ProcedureTab: React.FC = () => {
                 defaultOpen={true}
               >
                 <div className="w-full max-w-3xl mx-auto flex flex-col gap-5 py-2">
-                  
+
                   {/* Coeficiente r2 */}
                   <div className="bg-[#1a2436] p-5 sm:p-7 rounded-xl border border-[#334155] shadow-xs">
                     <div className="flex items-center justify-between gap-2 mb-2">
@@ -330,8 +330,8 @@ export const ProcedureTab: React.FC = () => {
                       <span className="text-xs text-slate-400 font-mono">0 ≤ r² ≤ 1</span>
                     </div>
 
-                    <div className="py-3 text-slate-100 overflow-x-auto">
-                      <BlockMath math="r^2 = \frac{ST - SR}{ST} = 1 - \frac{SR}{ST}" />
+                    <div className="py-3 text-slate-100 overflow-x-auto text-center">
+                      <BlockMath math="\displaystyle r^2 = \dfrac{ST - SR}{ST} = 1 - \dfrac{SR}{ST}" />
                     </div>
 
                     <p className="text-xs text-slate-300 mt-1">
@@ -345,11 +345,11 @@ export const ProcedureTab: React.FC = () => {
                       <span className="text-xs font-bold uppercase tracking-wider bg-slate-800 text-slate-300 px-2.5 py-0.5 rounded-md border border-slate-700 block w-fit mb-3">
                         Suma Total de Cuadrados (ST)
                       </span>
-                      <div className="text-slate-100 py-2 overflow-x-auto">
-                        <BlockMath math="ST = \sum_{i=1}^{n} (Y_i - \bar{Y})^2" />
+                      <div className="text-slate-100 py-2 overflow-x-auto text-center">
+                        <BlockMath math="\displaystyle ST = \sum_{i=1}^{n} (Y_i - \bar{Y})^2" />
                       </div>
                       <div className="text-xs text-slate-400 mt-2 font-mono text-center">
-                        con <InlineMath math="\bar{Y} = \frac{1}{n}\sum_{i=1}^{n} Y_i" />
+                        con <InlineMath math="\displaystyle \bar{Y} = \dfrac{1}{n}\sum_{i=1}^{n} Y_i" />
                       </div>
                     </div>
 
@@ -357,8 +357,8 @@ export const ProcedureTab: React.FC = () => {
                       <span className="text-xs font-bold uppercase tracking-wider bg-slate-800 text-slate-300 px-2.5 py-0.5 rounded-md border border-slate-700 block w-fit mb-3">
                         Suma de Residuos Cuadráticos (SR)
                       </span>
-                      <div className="text-slate-100 py-2 overflow-x-auto">
-                        <BlockMath math="SR = \sum_{i=1}^{n} \left( Y_i - (A + b \cdot X_i) \right)^2" />
+                      <div className="text-slate-100 py-2 overflow-x-auto text-center">
+                        <BlockMath math="\displaystyle SR = \sum_{i=1}^{n} \left( Y_i - (A + b \cdot X_i) \right)^2" />
                       </div>
                       <div className="text-xs text-slate-400 mt-2 font-mono text-center">
                         con <InlineMath math="\varepsilon_i = Y_i - \hat{Y}_i" />

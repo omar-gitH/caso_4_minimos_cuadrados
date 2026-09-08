@@ -5,7 +5,8 @@ import { ModelComparisonTab } from './components/ModelComparisonTab';
 import { ProcedureTab } from './components/ProcedureTab';
 import { ClusterChart } from './components/ClusterChart';
 import { ConclusionsTab } from './components/ConclusionsTab';
-import { Activity, Beaker, BookOpen, ListChecks, Scale, Award, Sparkles, Database, GitBranch, ChevronLeft, ChevronRight } from 'lucide-react';
+import { HeaderMetricCollapses } from './components/HeaderMetricCollapses';
+import { Activity, Beaker, BookOpen, ListChecks, Scale, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -112,7 +113,7 @@ function App() {
 
   return (
     <div className="min-h-screen relative bg-[#151e2e] text-slate-200 flex flex-col items-center">
-      
+
       {/* Subtle background glow */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute -top-[10%] -left-[5%] w-[500px] h-[500px] rounded-full bg-blue-600/[0.05] blur-[100px]"></div>
@@ -120,9 +121,9 @@ function App() {
       </div>
 
       <div className="relative z-10 w-full max-w-[1700px] p-3 sm:p-6 md:p-8 2xl:p-10 space-y-8">
-        
+
         {/* Modern Academic Header (Balanced Slate Theme, High Contrast) */}
-        <motion.header 
+        <motion.header
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
@@ -149,7 +150,7 @@ function App() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3 text-slate-100">
             Masa Corporal vs Metabolismo Animal
           </h1>
-          
+
           <p className="text-slate-300 max-w-3xl text-base sm:text-lg font-normal leading-relaxed mb-6">
             Modelado Alométrico y Ajuste Riguroso por Mínimos Cuadrados en{' '}
             <strong className="text-amber-300 font-semibold">Mamíferos</strong>,{' '}
@@ -158,65 +159,16 @@ function App() {
             <strong className="text-indigo-300 font-semibold">Peces</strong>.
           </p>
 
-          {/* Quick Metrics Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl text-left">
-            <motion.div 
-              whileHover={{ y: -2, scale: 1.02 }}
-              className="p-3 bg-[#243147]/90 hover:bg-[#2a3850] transition-all rounded-xl border border-[#334155] hover:border-blue-500/40 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] flex items-center gap-3 cursor-default btn-shimmer"
-            >
-              <div className="p-1.5 bg-blue-950/60 rounded-lg text-blue-400 border border-blue-800/40">
-                <Database className="w-4 h-4 flex-shrink-0" />
-              </div>
-              <div>
-                <span className="block text-[11px] text-slate-400 font-medium">Observaciones</span>
-                <span className="text-sm font-bold text-slate-100 font-mono">88 Especies</span>
-              </div>
-            </motion.div>
-            <motion.div 
-              whileHover={{ y: -2, scale: 1.02 }}
-              className="p-3 bg-[#243147]/90 hover:bg-[#2a3850] transition-all rounded-xl border border-[#334155] hover:border-indigo-500/40 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] flex items-center gap-3 cursor-default btn-shimmer"
-            >
-              <div className="p-1.5 bg-indigo-950/60 rounded-lg text-indigo-400 border border-indigo-800/40">
-                <GitBranch className="w-4 h-4 flex-shrink-0" />
-              </div>
-              <div>
-                <span className="block text-[11px] text-slate-400 font-medium">Clústeres</span>
-                <span className="text-sm font-bold text-slate-100 font-mono">4 Grupos</span>
-              </div>
-            </motion.div>
-            <motion.div 
-              whileHover={{ y: -2, scale: 1.02 }}
-              className="p-3 bg-[#243147]/90 hover:bg-[#2a3850] transition-all rounded-xl border border-[#334155] hover:border-amber-500/40 hover:shadow-[0_0_15px_rgba(245,158,11,0.2)] flex items-center gap-3 cursor-default btn-shimmer"
-            >
-              <div className="p-1.5 bg-amber-950/60 rounded-lg text-amber-400 border border-amber-800/40">
-                <Sparkles className="w-4 h-4 flex-shrink-0" />
-              </div>
-              <div>
-                <span className="block text-[11px] text-slate-400 font-medium">Ley Biofísica</span>
-                <span className="text-sm font-bold text-slate-100 font-mono">Kleiber (3/4)</span>
-              </div>
-            </motion.div>
-            <motion.div 
-              whileHover={{ y: -2, scale: 1.02 }}
-              className="p-3 bg-[#243147]/90 hover:bg-[#2a3850] transition-all rounded-xl border border-[#334155] hover:border-emerald-500/40 hover:shadow-[0_0_15px_rgba(16,185,129,0.2)] flex items-center gap-3 cursor-default btn-shimmer"
-            >
-              <div className="p-1.5 bg-emerald-950/60 rounded-lg text-emerald-400 border border-emerald-800/40">
-                <Activity className="w-4 h-4 flex-shrink-0" />
-              </div>
-              <div>
-                <span className="block text-[11px] text-slate-400 font-medium">Ajuste (r²)</span>
-                <span className="text-sm font-bold text-emerald-400 font-mono">&gt; 0.9100</span>
-              </div>
-            </motion.div>
-          </div>
+          {/* Quick Metrics Bar with 4 Interactive Collapses */}
+          <HeaderMetricCollapses />
         </motion.header>
 
         {/* Modern Clean Floating Tab Navigation */}
-        <div 
+        <div
           ref={navContainerRef}
           className="sticky top-3 sm:top-4 z-50 flex items-center justify-center w-full max-w-full px-1 sm:px-4 pointer-events-none"
         >
-          
+
           {/* Slider Left Arrow */}
           <motion.button
             whileHover={{ scale: 1.12, y: -1 }}
@@ -229,7 +181,7 @@ function App() {
             <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-slate-200" />
           </motion.button>
 
-          <nav 
+          <nav
             ref={navRef}
             className="flex space-x-1 sm:space-x-2 bg-[#1e293b]/90 backdrop-blur-xl p-1.5 sm:p-2 rounded-full border border-white/10 shadow-[0_10px_35px_rgba(0,0,0,0.4)] overflow-x-auto slider-touch no-scrollbar max-w-full touch-pan-x scroll-smooth pointer-events-auto"
           >
@@ -287,11 +239,11 @@ function App() {
               className="w-full transform-gpu"
             >
               {activeTab === 'theory' && <TheoryTab />}
-              
+
               {activeTab === 'models' && data && <ModelComparisonTab data={data} />}
-              
+
               {activeTab === 'procedure' && <ProcedureTab />}
-              
+
               {activeTab === 'simulations' && (
                 <div className="space-y-8">
                   <div className="bg-[#1e293b] p-6 sm:p-8 rounded-3xl text-center w-full max-w-5xl mx-auto border border-[#334155] shadow-lg">

@@ -98,11 +98,10 @@ export const SpeciesDataTable: React.FC = () => {
                 whileHover={{ scale: 1.06, y: -1 }}
                 whileTap={{ scale: 0.94 }}
                 onClick={() => setSelectedCluster(cf.id)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all border cursor-pointer btn-shimmer ${
-                  isSelected
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all border cursor-pointer btn-shimmer ${isSelected
                     ? `${cf.color} ring-1 ring-white/30 shadow-[0_0_12px_rgba(255,255,255,0.15)] font-bold`
                     : 'text-slate-400 border-[#334155] bg-[#1a2436] hover:bg-[#243147] hover:text-slate-200'
-                }`}
+                  }`}
               >
                 {cf.label} ({cf.count})
               </motion.button>
@@ -182,7 +181,7 @@ export const SpeciesDataTable: React.FC = () => {
 
       {/* Contenedor Scrolleable 2D con Límite de Altura (Responsive Scroll Container) */}
       <div className="relative rounded-xl border border-[#334155] overflow-hidden bg-[#1a2436] shadow-xs">
-        <div 
+        <div
           ref={scrollContainerRef}
           className="max-h-[380px] sm:max-h-[440px] md:max-h-[480px] table-scroll-2d select-text"
         >
