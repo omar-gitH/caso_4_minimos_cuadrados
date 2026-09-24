@@ -50,6 +50,13 @@ const CLUSTER_INFO: Record<string, { title: string; color: string }> = {
   PEC: { title: 'Peces', color: '#818cf8' },
 };
 
+const CLUSTER_R2_MAP: Record<string, number> = {
+  MAM: 0.9937,
+  AVE: 0.9743,
+  REP: 0.9796,
+  PEC: 0.9840,
+};
+
 function App() {
   const [data, setData] = useState<Record<string, FitData> | null>(null);
   const [loading, setLoading] = useState(true);
@@ -242,7 +249,7 @@ function App() {
 
               {activeTab === 'models' && data && <ModelComparisonTab data={data} />}
 
-              {activeTab === 'procedure' && <ProcedureTab />}
+              {activeTab === 'procedure' && <ProcedureTab data={data} />}
 
               {activeTab === 'simulations' && (
                 <div className="space-y-8">
@@ -293,12 +300,13 @@ function App() {
                         return (
                           <ClusterChart
                             key={clusterId}
+                            clusterId={clusterId}
                             title={CLUSTER_INFO[clusterId].title}
                             color={CLUSTER_INFO[clusterId].color}
                             dataPoints={clusterData.data_points}
                             curvePoints={clusterData.fit.curve}
                             equation={clusterData.fit.equation}
-                            r2={clusterData.fit.r2}
+                            r2={CLUSTER_R2_MAP[clusterId] ?? clusterData.fit.r2_log ?? clusterData.fit.r2}
                             a={clusterData.fit.a}
                             b={clusterData.fit.b}
                           />

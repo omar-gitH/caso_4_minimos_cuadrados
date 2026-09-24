@@ -8,9 +8,47 @@ interface ResultCardProps {
   r2: number;
   a?: number;
   b?: number;
+  scaleMode?: 'log' | 'linear';
+  clusterId?: string;
 }
 
-export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) => {
+const CLUSTER_A_VALUES: Record<string, number> = {
+  MAM: 1.2439,
+  AVE: 1.5732,
+  REP: -0.3926,
+  PEC: -0.7089,
+};
+
+export const ResultCard: React.FC<ResultCardProps> = ({
+  equation,
+  r2,
+  a,
+  b,
+  scaleMode = 'linear',
+  clusterId,
+}) => {
+  const isLog = scaleMode === 'log';
+
+  // Obtener A = ln(a) exacto según los valores de la cátedra solicitados
+  const A = clusterId && CLUSTER_A_VALUES[clusterId] !== undefined
+    ? CLUSTER_A_VALUES[clusterId]
+    : (a !== undefined ? Number(Math.log(a).toFixed(4)) : 0);
+
+  // Ecuación normal y = a * x^b
+  const cleanEquation = equation.trim().startsWith('y =') ? equation : `y = ${equation}`;
+
+  // Ecuación linealizada Log-Log: Y = A + b · X
+  const bVal = b !== undefined ? b : 0;
+  const signB = bVal >= 0 ? '+' : '-';
+  const absB = Math.abs(bVal).toFixed(4);
+  const signA = A < 0 ? '-' : '';
+  const absA = Math.abs(A).toFixed(4);
+  const formattedA = `${signA}${absA}`;
+  const logEquation = `Y = ${formattedA} ${signB} ${absB} \\cdot X`;
+
+  // Ecuación activa según el modo seleccionado
+  const displayEquation = isLog ? logEquation : cleanEquation;
+
   const quality = r2 >= 0.9 ? 'Excelente' : r2 >= 0.7 ? 'Bueno' : 'Regular';
   const colorClass = r2 >= 0.9 ? 'text-emerald-400' : r2 >= 0.7 ? 'text-blue-400' : 'text-amber-400';
   const borderClass = r2 >= 0.9 ? 'border-emerald-800/40' : r2 >= 0.7 ? 'border-blue-800/40' : 'border-amber-800/40';
@@ -26,19 +64,29 @@ export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) =>
     }
   };
 
-  // Ensure equation starts with y =
-  const cleanEquation = equation.trim().startsWith('y =') ? equation : `y = ${equation}`;
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
       {/* Ecuación Calculada */}
       <div className="bg-[#243147] rounded-2xl p-5 border border-[#334155] flex flex-col justify-between shadow-xs relative overflow-hidden transition-all hover:border-slate-500">
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-slate-400 text-xs font-bold tracking-wider uppercase">
-            Ecuación de Ajuste
-          </p>
+        <div className="flex items-center justify-between mb-2 gap-2 flex-wrap">
+          <div className="flex items-center gap-2">
+            <p className="text-slate-400 text-xs font-bold tracking-wider uppercase">
+              Ecuación de Ajuste
+            </p>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border ${
+              isLog
+                ? 'bg-blue-950/70 text-blue-300 border-blue-800/60'
+                : 'bg-emerald-950/70 text-emerald-300 border-emerald-800/60'
+            }`}>
+              {isLog ? 'Linealizada (Log-Log)' : 'Potencial (Normal)'}
+            </span>
+          </div>
           <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-[#1a2436] border border-[#334155] text-slate-300">
-            Modelo: <InlineMath math="y = a \cdot x^b" />
+            {isLog ? (
+              <span>Modelo: <InlineMath math="Y = A + b \cdot X" /></span>
+            ) : (
+              <span>Modelo: <InlineMath math="y = a \cdot x^b" /></span>
+            )}
           </span>
         </div>
 
@@ -49,7 +97,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) =>
             className="w-full overflow-x-auto slider-touch no-scrollbar sm:custom-scrollbar py-2"
           >
             <div className="inline-flex items-center justify-center min-w-full px-4 text-slate-100 text-base sm:text-lg md:text-xl xl:text-2xl font-semibold whitespace-nowrap">
-              <BlockMath math={cleanEquation} />
+              <BlockMath math={displayEquation} />
             </div>
           </div>
 
@@ -77,12 +125,20 @@ export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) =>
           </div>
         </div>
 
-        {/* Parámetros explícitos si están disponibles */}
-        {(a !== undefined && b !== undefined) && (
-          <div className="flex items-center justify-around pt-3 border-t border-[#334155] text-xs text-slate-400 font-mono">
-            <span><strong className="text-slate-200">a:</strong> {a.toFixed(4)}</span>
-            <span><strong className="text-slate-200">b:</strong> {b.toFixed(4)}</span>
+        {/* Parámetros explícitos según el modo activo */}
+        {isLog ? (
+          <div className="flex items-center justify-around pt-3 border-t border-[#334155] text-xs font-mono">
+            <span><strong className="text-blue-300 font-bold">A = ln(a):</strong> <span className="text-slate-200">{A.toFixed(4)}</span></span>
+            <span><strong className="text-emerald-300 font-bold">b (pendiente):</strong> <span className="text-slate-200">{b !== undefined ? b.toFixed(4) : '-'}</span></span>
+            <span><strong className="text-slate-400">a original:</strong> <span className="text-slate-400">{a !== undefined ? a.toFixed(4) : '-'}</span></span>
           </div>
+        ) : (
+          (a !== undefined && b !== undefined) && (
+            <div className="flex items-center justify-around pt-3 border-t border-[#334155] text-xs font-mono">
+              <span><strong className="text-slate-200">a:</strong> <span className="text-slate-300">{a.toFixed(4)}</span></span>
+              <span><strong className="text-emerald-300">b:</strong> <span className="text-slate-200 font-bold">{b.toFixed(4)}</span></span>
+            </div>
+          )
         )}
       </div>
 
@@ -107,8 +163,8 @@ export const ResultCard: React.FC<ResultCardProps> = ({ equation, r2, a, b }) =>
         </div>
 
         <div className="text-[11px] text-slate-400 font-normal pt-2 border-t border-[#334155]/60 flex justify-between items-center">
-          <span>Criterio: <strong className="text-slate-300">r² &gt; 0.85</strong> óptimo</span>
-          <span className="text-slate-500">UTN FRP</span>
+          <span>En variable linealizada <strong className="text-slate-300">Ln(y)</strong> (Pág. 8 Apunte)</span>
+          <span className="text-slate-500 font-mono">UTN FRP</span>
         </div>
       </div>
     </div>

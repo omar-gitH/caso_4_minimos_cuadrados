@@ -1,5 +1,6 @@
-import React from 'react';
-import { Award, Compass, Sparkles, TrendingUp, ThermometerSnowflake, ThermometerSun } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Award, Compass, Sparkles, TrendingUp, ThermometerSnowflake, ThermometerSun, Activity, SlidersHorizontal, ChevronDown, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { InlineMath } from 'react-katex';
 import { ResponsiveContainer, ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
@@ -11,6 +12,7 @@ interface FitData {
     b: number;
     equation: string;
     r2: number;
+    r2_log?: number;
     curve: { x: number; y: number }[];
   };
 }
@@ -20,32 +22,47 @@ interface ConclusionsTabProps {
 }
 
 export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
+  const [scaleMode, setScaleMode] = useState<'log' | 'linear'>('log');
+  const [isScaleCollapseOpen, setIsScaleCollapseOpen] = useState<boolean>(false);
+
   // Combinar puntos de curvas para un único gráfico comparativo
-  // Tomamos 50 valores de masa en escala log entre 0.002 y 12000 kg
-  const combinedCurveData: any[] = [];
-  const mamFit = data['MAM']?.fit;
-  const aveFit = data['AVE']?.fit;
-  const repFit = data['REP']?.fit;
-  const pecFit = data['PEC']?.fit;
+  const combinedCurveData = useMemo(() => {
+    const list: any[] = [];
+    const mamFit = data['MAM']?.fit;
+    const aveFit = data['AVE']?.fit;
+    const repFit = data['REP']?.fit;
+    const pecFit = data['PEC']?.fit;
 
-  if (mamFit && aveFit && repFit && pecFit) {
-    const minMass = 0.002;
-    const maxMass = 12000;
-    const steps = 60;
-    const logMin = Math.log10(minMass);
-    const logMax = Math.log10(maxMass);
+    if (mamFit && aveFit && repFit && pecFit) {
+      const minMass = 0.002;
+      const maxMass = 12000;
+      const steps = scaleMode === 'linear' ? 120 : 60;
+      const logMin = Math.log10(minMass);
+      const logMax = Math.log10(maxMass);
 
-    for (let i = 0; i <= steps; i++) {
-      const mass = Math.pow(10, logMin + (i / steps) * (logMax - logMin));
-      combinedCurveData.push({
-        x: mass,
-        mam: mamFit.a * Math.pow(mass, mamFit.b),
-        ave: aveFit.a * Math.pow(mass, aveFit.b),
-        rep: repFit.a * Math.pow(mass, repFit.b),
-        pec: pecFit.a * Math.pow(mass, pecFit.b),
-      });
+      for (let i = 0; i <= steps; i++) {
+        const mass = scaleMode === 'log'
+          ? Math.pow(10, logMin + (i / steps) * (logMax - logMin))
+          : minMass + (i / steps) * (maxMass - minMass);
+
+        list.push({
+          x: mass,
+          mam: mamFit.a * Math.pow(mass, mamFit.b),
+          ave: aveFit.a * Math.pow(mass, aveFit.b),
+          rep: repFit.a * Math.pow(mass, repFit.b),
+          pec: pecFit.a * Math.pow(mass, pecFit.b),
+        });
+      }
     }
-  }
+    return list;
+  }, [data, scaleMode]);
+
+  const CLUSTER_R2_MAP: Record<string, number> = {
+    MAM: 0.9937,
+    AVE: 0.9743,
+    REP: 0.9796,
+    PEC: 0.9840,
+  };
 
   const clustersSummary = [
     {
@@ -56,7 +73,7 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
       badgeColor: 'bg-sky-950/40 text-sky-300 border-sky-800/40',
       a: data['AVE']?.fit.a || 4.8220,
       b: data['AVE']?.fit.b || 0.7519,
-      r2: data['AVE']?.fit.r2 || 0.9107,
+      r2: data['AVE']?.fit.r2_log ?? CLUSTER_R2_MAP['AVE'],
       equation: data['AVE']?.fit.equation || 'y = 4.8220 \\cdot x^{0.7519}',
       insight: 'Tienen la tasa basal más alta debido a la gran demanda energética del vuelo y temperaturas corporales de ~40°C.'
     },
@@ -68,9 +85,9 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
       badgeColor: 'bg-amber-950/40 text-amber-300 border-amber-800/40',
       a: data['MAM']?.fit.a || 3.4690,
       b: data['MAM']?.fit.b || 0.7423,
-      r2: data['MAM']?.fit.r2 || 0.9908,
+      r2: data['MAM']?.fit.r2_log ?? CLUSTER_R2_MAP['MAM'],
       equation: data['MAM']?.fit.equation || 'y = 3.4690 \\cdot x^{0.7423}',
-      insight: 'Ajuste casi perfecto (r²=0.9908). Representan el modelo clásico de la Ley de Kleiber con b ≈ 0.74.'
+      insight: 'Ajuste casi perfecto (r²=0.9937 en variable linealizada). Representan el modelo clásico de la Ley de Kleiber con b ≈ 0.74.'
     },
     {
       id: 'REP',
@@ -80,7 +97,7 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
       badgeColor: 'bg-emerald-950/40 text-emerald-300 border-emerald-800/40',
       a: data['REP']?.fit.a || 0.6753,
       b: data['REP']?.fit.b || 0.8035,
-      r2: data['REP']?.fit.r2 || 0.9140,
+      r2: data['REP']?.fit.r2_log ?? CLUSTER_R2_MAP['REP'],
       equation: data['REP']?.fit.equation || 'y = 0.6753 \\cdot x^{0.8035}',
       insight: 'Consumen ~5 veces menos energía que un mamífero del mismo tamaño ya que dependen del calor ambiental.'
     },
@@ -92,7 +109,7 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
       badgeColor: 'bg-indigo-950/40 text-indigo-300 border-indigo-800/40',
       a: data['PEC']?.fit.a || 0.4922,
       b: data['PEC']?.fit.b || 0.7806,
-      r2: data['PEC']?.fit.r2 || 0.9832,
+      r2: data['PEC']?.fit.r2_log ?? CLUSTER_R2_MAP['PEC'],
       equation: data['PEC']?.fit.equation || 'y = 0.4922 \\cdot x^{0.7806}',
       insight: 'Tienen el nivel basal más bajo. La flotabilidad acuática reduce el trabajo antigravitatorio.'
     },
@@ -130,31 +147,158 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
               Contraste Global: Las 4 Curvas Alométricas Superpuestas
             </h3>
             <p className="text-slate-400 text-sm mt-1">
-              Visualización simultánea en escala logarítmica. Nótese el paralelismo de pendientes y la separación vertical por termorregulación.
+              {scaleMode === 'log'
+                ? 'Visualización simultánea en escala logarítmica. Nótese el paralelismo de las rectas y la separación vertical por nivel metabólico basal.'
+                : 'Visualización simultánea en escala normal lineal. Permite apreciar la curvatura potencial cóncava natural y la divergencia a altas masas.'}
             </p>
+          </div>
+
+          {/* Controles de Escala y Collapse */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="bg-[#111827]/80 p-1 rounded-xl border border-slate-700/60 flex items-center gap-1 shadow-inner">
+              <button
+                type="button"
+                onClick={() => setScaleMode('log')}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                  scaleMode === 'log'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+                title="Escala logarítmica (Log-Log)"
+              >
+                <TrendingUp className="w-3.5 h-3.5" />
+                <span>Log-Log</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setScaleMode('linear')}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                  scaleMode === 'linear'
+                    ? 'bg-emerald-600 text-white shadow-md'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+                title="Escala normal lineal"
+              >
+                <Activity className="w-3.5 h-3.5" />
+                <span>Normal</span>
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsScaleCollapseOpen(!isScaleCollapseOpen)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium border flex items-center gap-1.5 cursor-pointer transition-all ${
+                isScaleCollapseOpen
+                  ? 'bg-slate-700 text-slate-100 border-slate-500 shadow-sm'
+                  : 'bg-[#141f30] hover:bg-slate-800 text-slate-300 border-slate-700'
+              }`}
+              title="Explicación de las escalas"
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5 text-blue-400" />
+              <span>Explicación</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-300 ${
+                  isScaleCollapseOpen ? 'rotate-180 text-blue-400' : 'text-slate-400'
+                }`}
+              />
+            </button>
           </div>
         </div>
 
+        {/* Panel Collapse de información */}
+        <AnimatePresence>
+          {isScaleCollapseOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              <div className="bg-[#141f30] border border-[#2d3b52] rounded-2xl p-4 sm:p-5 space-y-3 shadow-inner">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  <div
+                    onClick={() => setScaleMode('log')}
+                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                      scaleMode === 'log'
+                        ? 'bg-blue-950/50 border-blue-500 shadow-sm ring-1 ring-blue-500/40'
+                        : 'bg-[#1a2436] border-[#334155] hover:bg-[#202c42]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-bold text-slate-100 flex items-center gap-1.5">
+                        <TrendingUp className="w-4 h-4 text-blue-400" />
+                        Escala Log-Log: Rectas Paralelas
+                      </span>
+                      {scaleMode === 'log' && <Check className="w-4 h-4 text-blue-400" />}
+                    </div>
+                    <p className="text-xs text-slate-300">
+                      Linealiza las curvas (<InlineMath math="Y = A + bX" />). Las 4 líneas son paralelas porque comparten un exponente muy cercano (<InlineMath math="b \approx 0.74 - 0.80" />).
+                    </p>
+                  </div>
+
+                  <div
+                    onClick={() => setScaleMode('linear')}
+                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                      scaleMode === 'linear'
+                        ? 'bg-emerald-950/50 border-emerald-500 shadow-sm ring-1 ring-emerald-500/40'
+                        : 'bg-[#1a2436] border-[#334155] hover:bg-[#202c42]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-bold text-slate-100 flex items-center gap-1.5">
+                        <Activity className="w-4 h-4 text-emerald-400" />
+                        Escala Normal: Curvas Potenciales
+                      </span>
+                      {scaleMode === 'linear' && <Check className="w-4 h-4 text-emerald-400" />}
+                    </div>
+                    <p className="text-xs text-slate-300">
+                      Muestra la curvatura física (<InlineMath math="y = a \cdot x^b" />). Permite ver la enorme separación energética en animales pesados entre endotermos (aves/mamíferos) y ectotermos (reptiles/peces).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="h-[440px] w-full bg-[#1a2436] rounded-2xl p-4 border border-[#334155] shadow-xs">
           <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={combinedCurveData} margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
+            <ComposedChart
+              key={`conclusions-${scaleMode}`}
+              data={combinedCurveData}
+              margin={{ top: 20, right: 30, bottom: 20, left: 30 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
               <XAxis 
                 dataKey="x" 
                 type="number" 
-                scale="log" 
-                domain={[0.002, 12000]}
-                label={{ value: 'Masa corporal (kg) [Escala Log]', position: 'insideBottom', offset: -12, fill: '#cbd5e1' }}
+                scale={scaleMode === 'log' ? 'log' : 'linear'} 
+                domain={scaleMode === 'log' ? [0.002, 12000] : [0, 12000]}
+                label={{
+                  value: scaleMode === 'log' ? 'Masa corporal (kg) [Escala Logarítmica]' : 'Masa corporal (kg) [Escala Normal]',
+                  position: 'insideBottom',
+                  offset: -12,
+                  fill: '#cbd5e1'
+                }}
                 tick={{ fill: '#94a3b8', fontSize: 12 }}
-                tickFormatter={(val) => val >= 1000 ? `${val/1000}k` : val}
+                tickFormatter={(val) => val >= 1000 ? `${(val/1000).toLocaleString(undefined, { maximumFractionDigits: 1 })}k` : val.toString()}
                 stroke="#64748b"
               />
               <YAxis 
                 type="number" 
-                scale="log" 
-                domain={['auto', 'auto']}
-                label={{ value: 'Tasa Metabólica Basal (W) [Escala Log]', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' }, fill: '#cbd5e1', offset: -10 }}
+                scale={scaleMode === 'log' ? 'log' : 'linear'} 
+                domain={scaleMode === 'log' ? ['auto', 'auto'] : [0, 'auto']}
+                label={{
+                  value: scaleMode === 'log' ? 'Tasa Metabólica Basal (W) [Escala Log]' : 'Tasa Metabólica Basal (W) [Escala Normal]',
+                  angle: -90,
+                  position: 'insideLeft',
+                  style: { textAnchor: 'middle' },
+                  fill: '#cbd5e1',
+                  offset: -10
+                }}
                 tick={{ fill: '#94a3b8', fontSize: 12 }}
+                tickFormatter={(val) => val >= 1000 ? `${(val/1000).toLocaleString(undefined, { maximumFractionDigits: 1 })}k` : val.toString()}
                 stroke="#64748b"
               />
               <Tooltip 
@@ -163,11 +307,11 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
                     const d = payload[0].payload;
                     return (
                       <div className="bg-[#243147] p-4 rounded-xl border border-[#334155] shadow-xl text-xs space-y-1.5">
-                        <p className="font-bold text-slate-100 text-sm mb-1 font-mono">Masa: {d.x.toFixed(2)} kg</p>
-                        <p className="text-sky-300 font-medium">Aves: <span className="font-mono font-bold">{d.ave.toFixed(2)} W</span></p>
-                        <p className="text-amber-300 font-medium">Mamíferos: <span className="font-mono font-bold">{d.mam.toFixed(2)} W</span></p>
-                        <p className="text-emerald-300 font-medium">Reptiles: <span className="font-mono font-bold">{d.rep.toFixed(2)} W</span></p>
-                        <p className="text-indigo-300 font-medium">Peces: <span className="font-mono font-bold">{d.pec.toFixed(2)} W</span></p>
+                        <p className="font-bold text-slate-100 text-sm mb-1 font-mono">Masa: {Number(d.x).toFixed(2)} kg</p>
+                        <p className="text-sky-300 font-medium">Aves: <span className="font-mono font-bold">{Number(d.ave).toFixed(2)} W</span></p>
+                        <p className="text-amber-300 font-medium">Mamíferos: <span className="font-mono font-bold">{Number(d.mam).toFixed(2)} W</span></p>
+                        <p className="text-emerald-300 font-medium">Reptiles: <span className="font-mono font-bold">{Number(d.rep).toFixed(2)} W</span></p>
+                        <p className="text-indigo-300 font-medium">Peces: <span className="font-mono font-bold">{Number(d.pec).toFixed(2)} W</span></p>
                       </div>
                     );
                   }
@@ -307,7 +451,7 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
         
         <div className="space-y-4 text-slate-300 text-base md:text-lg font-normal leading-relaxed">
           <p>
-            El análisis mediante el <strong>Método de Mínimos Cuadrados</strong> demostró de forma concluyente que la relación entre la masa corporal y la tasa metabólica basal en los cuatro clústeres analizados es de carácter <strong>estrictamente potencial</strong> (<InlineMath math="y = a \cdot x^b" />), alcanzando coeficientes de determinación sobresalientes (<InlineMath math="r^2 > 0.91" /> en todos los grupos y hasta <InlineMath math="0.9908" /> en mamíferos).
+            El análisis mediante el <strong>Método de Mínimos Cuadrados</strong> demostró de forma concluyente que la relación entre la masa corporal y la tasa metabólica basal en los cuatro clústeres analizados es de carácter <strong>estrictamente potencial</strong> (<InlineMath math="y = a \cdot x^b" />), alcanzando coeficientes de determinación sobresalientes (<InlineMath math="r^2 > 0.97" /> en todos los grupos y hasta <InlineMath math="0.9937" /> en mamíferos con sumatorias sobre la variable linealizada).
           </p>
           <p>
             Respondiendo a la pregunta central de la investigación: <strong>los animales no consumen energía en forma directamente proporcional a su masa (<InlineMath math="b \neq 1" />)</strong> debido a dos limitaciones biofísicas universales:

@@ -27,7 +27,12 @@ interface FitData {
       formula_general: string;
       ecuacion: string;
       r2: number;
+      r2_log?: number;
+      r2_inv?: number;
+      r2_real?: number;
       sr: number;
+      sr_real?: number;
+      espacio_evaluacion?: string;
       es_optimo: boolean;
       justificacion: string;
     }[];
@@ -124,22 +129,23 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
           Como indica la consigna de la cátedra: <em>"Es importante no elegir el modelo de antemano ni confiarse por la forma aparente de los datos. La selección del ajuste debe estar justificada mediante los gráficos, la teoría, las medidas de bondad y el comportamiento de los residuos."</em>
         </p>
         <p className="text-xs sm:text-sm text-slate-400">
-          A continuación se presentan los 3 modelos evaluados mediante mínimos cuadrados para el clúster de <strong className="text-slate-200">{CLUSTERS.find(c => c.id === selectedCluster)?.name}</strong>:
+          A continuación se contrastan los <strong className="text-slate-200">5 modelos canónicos del apunte teórico</strong> (Págs. 4 a 8: Lineal, Polinómico, Potencial, Exponencial y Cociente) evaluados mediante mínimos cuadrados para el clúster de <strong className="text-slate-200">{CLUSTERS.find(c => c.id === selectedCluster)?.name}</strong>:
         </p>
       </div>
 
       {/* Tabla Comparativa de Modelos */}
       <div className="space-y-1">
         <div className="overflow-x-auto slider-touch rounded-2xl border border-[#334155] bg-[#1a2436] shadow-xs">
-          <table className="w-full text-left border-collapse text-sm md:text-base min-w-[650px]">
+          <table className="w-full text-left border-collapse text-sm md:text-base min-w-[750px]">
             <thead>
               <tr className="bg-[#243147] border-b border-[#334155] text-slate-300 uppercase text-xs tracking-wider font-semibold">
                 <th className="p-4">Modelo</th>
                 <th className="p-4">Fórmula General</th>
                 <th className="p-4">Ecuación Obtenida</th>
+                <th className="p-4 text-center">Espacio de Cálculo (Pág. 8)</th>
                 <th className="p-4 text-center">Bondad (r²)</th>
                 <th className="p-4 text-center">Residuo (Sr)</th>
-                <th className="p-4">Evaluación y Diagnóstico</th>
+                <th className="p-4">Evaluación y Diagnóstico Biofísico</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#334155] text-slate-300 font-normal">
@@ -154,7 +160,7 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
                     ) : (
                       <XCircle className="w-5 h-5 text-rose-400 flex-shrink-0" />
                     )}
-                    {m.modelo}
+                    <span>{m.modelo}</span>
                   </td>
                   <td className="p-4 text-slate-300 font-mono text-sm">
                     <InlineMath math={m.formula_general} />
@@ -162,16 +168,36 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
                   <td className="p-4 font-mono text-xs md:text-sm text-slate-100 font-semibold">
                     <InlineMath math={m.ecuacion} />
                   </td>
-                  <td className="p-4 text-center">
-                    <span className={`font-mono font-bold px-2.5 py-1 rounded-full text-xs md:text-sm ${m.r2 >= 0.90 ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-800/40' :
-                        m.r2 >= 0.70 ? 'bg-amber-950/40 text-amber-300 border border-amber-800/40' :
-                          'bg-rose-950/40 text-rose-300 border border-rose-800/40'
-                      }`}>
-                      {m.r2 < -99 ? '<< 0' : m.r2.toFixed(4)}
+                  <td className="p-4 text-center font-mono text-xs text-slate-300">
+                    <span className="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 whitespace-nowrap">
+                      {m.espacio_evaluacion || 'Pág. 8 Apunte'}
                     </span>
                   </td>
+                  <td className="p-4 text-center">
+                    <div className="flex flex-col items-center gap-1">
+                      <span className={`font-mono font-bold px-2.5 py-1 rounded-full text-xs md:text-sm ${
+                        m.r2 >= 0.85
+                          ? 'bg-emerald-950/50 text-emerald-300 border border-emerald-800/50'
+                          : 'bg-rose-950/50 text-rose-300 border border-rose-800/50'
+                      }`}>
+                        {m.r2 < -99 ? '<< 0' : m.r2.toFixed(4)}
+                      </span>
+                      {m.r2_real !== undefined && Math.abs(m.r2_real - m.r2) > 0.001 && (
+                        <span className="text-[11px] font-mono text-slate-400">
+                          r² real: {m.r2_real < -99 ? '<< 0' : m.r2_real.toFixed(4)}
+                        </span>
+                      )}
+                    </div>
+                  </td>
                   <td className="p-4 text-center font-mono text-xs text-slate-400">
-                    {m.sr > 100000 ? '> 100,000' : m.sr.toFixed(2)}
+                    <div className="flex flex-col items-center gap-0.5">
+                      <span className="text-slate-200 font-semibold">{m.sr > 100000 ? '> 100,000' : m.sr.toFixed(4)}</span>
+                      {m.sr_real !== undefined && Math.abs(m.sr_real - m.sr) > 0.01 && (
+                        <span className="text-[10px] text-slate-500 font-sans">
+                          real: {m.sr_real > 100000 ? '> 100k' : m.sr_real.toFixed(1)}
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td className="p-4 text-xs md:text-sm leading-relaxed text-slate-300">
                     {m.justificacion}
@@ -293,35 +319,55 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
           </ResponsiveContainer>
         </div>
 
-        {/* Diagnóstico de Residuos */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-          <div className="p-5 bg-[#243147] rounded-2xl border border-[#334155] space-y-2 shadow-xs">
+        {/* Diagnóstico de Residuos y Justificación Biofísica de Modelos */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
+          <div className="p-5 bg-[#243147] rounded-2xl border border-emerald-900/60 space-y-2 shadow-xs">
             <div className="flex items-center gap-2 text-emerald-300 font-bold text-sm sm:text-base">
               <CheckCircle className="w-5 h-5 text-emerald-400" />
-              Homocedasticidad en Log
+              1. Homocedasticidad (Modelo Potencial)
             </div>
             <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              En la escala logarítmica <InlineMath math="\ln(y)" />, la dispersión residual es uniforme e independiente de la masa, validando la hipótesis de Gauss-Markov.
+              En la escala logarítmica <InlineMath math="\ln(y)" />, la dispersión residual es simétrica y de varianza uniforme, validando el teorema de Gauss-Markov. Es el único modelo con fundamento en las redes fractales de transporte biológico (Ley de Kleiber).
             </p>
           </div>
 
-          <div className="p-5 bg-[#243147] rounded-2xl border border-[#334155] space-y-2 shadow-xs">
+          <div className="p-5 bg-[#243147] rounded-2xl border border-amber-900/60 space-y-2 shadow-xs">
             <div className="flex items-center gap-2 text-amber-300 font-bold text-sm sm:text-base">
               <AlertTriangle className="w-5 h-5 text-amber-400" />
-              Falla del Modelo Lineal
+              2. Falla del Modelo Lineal
             </div>
             <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              En el modelo lineal, los especímenes de gran masa distorsionan el ajuste, generando errores relativos inaceptables de más del <strong className="text-rose-400">10,000%</strong> en especies pequeñas.
+              La recta impone una ordenada al origen <InlineMath math="a_1 > 0" /> (gasto calórico con masa cero) y una pendiente constante. Los animales pesados dominan las sumatorias, provocando errores relativos inaceptables de más del <strong className="text-amber-400">10,000%</strong> en especies pequeñas.
             </p>
           </div>
 
-          <div className="p-5 bg-[#243147] rounded-2xl border border-[#334155] space-y-2 shadow-xs">
-            <div className="flex items-center gap-2 text-rose-300 font-bold text-sm sm:text-base">
-              <XCircle className="w-5 h-5 text-rose-400" />
-              Inviabilidad Exponencial
+          <div className="p-5 bg-[#243147] rounded-2xl border border-purple-900/60 space-y-2 shadow-xs">
+            <div className="flex items-center gap-2 text-purple-300 font-bold text-sm sm:text-base">
+              <AlertTriangle className="w-5 h-5 text-purple-400" />
+              3. Inviabilidad Polinómica (Overfitting)
             </div>
             <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              El modelo exponencial <InlineMath math="e^{bx}" /> predice una tasa que crece de forma explosiva, incompatible con la biofísica real y resultando en <InlineMath math="r^2 < 0" />.
+              Aunque la parábola de 2do orden incrementa <InlineMath math="r^2" /> gracias a un 3er parámetro libre (<InlineMath math="a_2" />), el término cuadrático resulta negativo (<InlineMath math="a_2 < 0" />). Esto predice que para animales grandes el metabolismo decrecería hasta volverse negativo (<InlineMath math="\lim_{x \to \infty} y = -\infty" />).
+            </p>
+          </div>
+
+          <div className="p-5 bg-[#243147] rounded-2xl border border-rose-900/60 space-y-2 shadow-xs">
+            <div className="flex items-center gap-2 text-rose-300 font-bold text-sm sm:text-base">
+              <XCircle className="w-5 h-5 text-rose-400" />
+              4. Inviabilidad Exponencial (Pág. 7 y 8)
+            </div>
+            <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
+              Evaluado según la Pág. 8 del apunte en <InlineMath math="\text{Ln}(y)" />, su coeficiente <InlineMath math="r^2 \approx 0.27 - 0.47" /> no supera el umbral de aceptación (<InlineMath math="r^2 > 0.85" />). En espacio real predice tasas térmicas que harían hervir los tejidos de animales grandes.
+            </p>
+          </div>
+
+          <div className="p-5 bg-[#243147] rounded-2xl border border-sky-900/60 space-y-2 shadow-xs md:col-span-2 lg:col-span-2">
+            <div className="flex items-center gap-2 text-sky-300 font-bold text-sm sm:text-base">
+              <XCircle className="w-5 h-5 text-sky-400" />
+              5. Incompatibilidad del Modelo del Cociente (Pág. 6-8)
+            </div>
+            <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
+              El ajuste del cociente linealizado por inversión <InlineMath math="1/y" /> es óptimo para cinéticas enzimáticas con saturación (Michaelis-Menten). Sin embargo, en alometría animal impone una cota máxima asintótica artificial (<InlineMath math="y \to a \approx 1-6 \text{ W}" />), cuando mamíferos y peces grandes alcanzan miles de Watts.
             </p>
           </div>
         </div>
