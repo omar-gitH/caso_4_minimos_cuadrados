@@ -98,22 +98,20 @@ export const TheoryTab: React.FC = () => {
       <div className="space-y-6">
         <h3 className="text-xl sm:text-2xl font-bold text-slate-100 flex items-center gap-3">
           <Flame className="w-6 h-6 text-amber-400" />
-          Fundamentación Alométrica: ¿Por qué la relación no es lineal?
+          Fundamentación: ¿Por qué la relación no es lineal?
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 bg-[#243147] rounded-2xl border border-[#334155] space-y-3 shadow-xs">
-            <h4 className="text-base sm:text-lg font-bold text-amber-300">1. Geometría y Disipación de Calor (M^{2 / 3})</h4>
+            <h4 className="text-base sm:text-lg font-bold text-amber-300">1.Geometría y disipación de calor</h4>
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-normal">
-              Si un animal duplicara su tamaño manteniendo el metabolismo directamente proporcional a su masa (<InlineMath math="b = 1" />), su masa y volumen de células crecerían en proporción al cubo (<InlineMath math="L^3" />), pero su superficie para disipar calor solo crecería al cuadrado (<InlineMath math="L^2" />).
-              Consecuencia: Un animal grande como un elefante se sobrecalentaría instantáneamente hasta hervir sus tejidos.
-            </p>
+              Cuando un animal aumenta de tamaño, su masa y su superficie no aumentan de la misma manera. La masa crece más rápido que la superficie disponible para liberar calor. Por eso, a medida que los animales son más grandes, cambia la forma en que utilizan y pierden energía            </p>
           </div>
 
           <div className="p-6 bg-[#243147] rounded-2xl border border-[#334155] space-y-3 shadow-xs">
-            <h4 className="text-base sm:text-lg font-bold text-blue-300">2. Redes Fractales de Transporte y Ley de Kleiber (M^{3 / 4})</h4>
+            <h4 className="text-base sm:text-lg font-bold text-blue-300">2.Ley de Kleiber y transporte de energía</h4>
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-normal">
-              El biólogo Max Kleiber descubrió empíricamente en 1932 que la tasa metabólica escala con un exponente cercano a <InlineMath math="b \approx 0.75" /> (<InlineMath math="3/4" />). Posteriormente, los físicos West, Brown y Enquist demostraron que esta regla se deriva de las redes fractales ramificadas (sistema circulatorio y respiratorio) que distribuyen nutrientes y oxígeno limitando el consumo a gran escala.
+              En 1932, el biólogo Max Kleiber observó que el metabolismo de los animales aumenta con su masa corporal, pero no de forma proporcional. Los animales más grandes necesitan más energía, aunque no necesitan exactamente el doble de energía cuando su masa se duplica.
             </p>
           </div>
         </div>
