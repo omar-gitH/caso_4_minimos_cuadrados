@@ -145,7 +145,6 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
                 <th className="p-4 text-center">Espacio de Cálculo (Pág. 8)</th>
                 <th className="p-4 text-center">Bondad (r²)</th>
                 <th className="p-4 text-center">Residuo (Sr)</th>
-                <th className="p-4">Evaluación y Diagnóstico Biofísico</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#334155] text-slate-300 font-normal">
@@ -198,9 +197,6 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
                         </span>
                       )}
                     </div>
-                  </td>
-                  <td className="p-4 text-xs md:text-sm leading-relaxed text-slate-300">
-                    {m.justificacion}
                   </td>
                 </tr>
               ))}

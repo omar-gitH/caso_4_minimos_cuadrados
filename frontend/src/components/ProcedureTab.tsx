@@ -200,7 +200,7 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
                   Catálogo Teórico de Métodos de Ajuste por Mínimos Cuadrados
                 </span>
                 <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
-                  Selecciona cualquiera de las familias teóricas para consultar su deducción algebraica, tabla de sumatorias, sistema matricial y cálculo riguroso de <InlineMath math="r^2" />.
+                  Selecciona un método para consultar su deducción algebraica, tabla de sumatorias, sistema matricial y cálculo riguroso de <InlineMath math="r^2" />.
                 </p>
               </div>
               <div className="flex items-center gap-2 self-start sm:self-auto flex-shrink-0">
@@ -214,23 +214,19 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
             <div className="p-3.5 bg-blue-950/40 rounded-xl border border-blue-800/50 flex items-start gap-3 text-xs sm:text-sm text-slate-300">
               <Info className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
               <p>
-                <strong className="text-blue-300">Marco Teórico y Ejercicio de Referencia:</strong> Los desarrollos analíticos, tablas de sumatorias y cálculos de bondad de ajuste (<InlineMath math="r^2" />) presentados en esta sección corresponden al <em>ejercicio testigo de referencia de la guía de trabajos prácticos de la cátedra</em> (<InlineMath math="x=[1..5]" />, <InlineMath math="y=[0.5..8.4]" />). Este ejercicio es un problema abstracto de análisis numérico para contrastar los 5 métodos canónicos y <strong>es totalmente independiente de los datos del Trabajo Práctico Grupal</strong> (el cual aborda el conjunto biológico de 125 especies en 4 clústeres y se resuelve en la pestaña <em>"2. Ejemplo en Vivo (Clústeres TP)"</em>).
+                <strong className="text-blue-300">Marco Teórico y Ejercicio de Referencia:</strong> Los desarrollos analíticos, tablas de sumatorias y cálculos de bondad de ajuste (<InlineMath math="r^2" />) presentados en esta sección corresponden al <em>ejercicio testigo de referencia de la guía de trabajos prácticos de la cátedra</em> (<InlineMath math="x=[1..5]" />, <InlineMath math="y=[0.5..8.4]" />). Este ejercicio es un problema abstracto de análisis numérico, independiente de los datos del Trabajo Práctico Grupal, que aborda el conjunto biológico de 125 especies en 4 clústeres y se resuelve en la pestaña <em>"2. Ejemplo en Vivo (Clústeres TP)"</em>.
               </p>
             </div>
 
             <div className="flex items-center gap-2 overflow-x-auto slider-touch no-scrollbar pb-1 pt-1">
               {[
-                { id: 'potencial', label: 'c. Potencial', badge: 'Guía Teórica', isStar: true },
                 { id: 'lineal', label: 'a. Lineal', badge: 'Recta', isStar: false },
-                { id: 'polinomica', label: 'b. Polinómica', badge: 'Parábola', isStar: false },
-                { id: 'exponencial', label: 'd. Exponencial', badge: 'Semilog', isStar: false },
-                { id: 'cociente', label: 'e. Cociente', badge: 'Saturación', isStar: false },
-                { id: 'comparativa', label: 'Matriz Comparativa', badge: '5 Métodos', isStar: false },
+                { id: 'potencial', label: 'b. Potencial', badge: 'Guía Teórica', isStar: true },
               ].map((m) => (
                 <button
                   key={m.id}
                   type="button"
-                  onClick={() => setActiveTheoryMethod(m.id as any)}
+                  onClick={() => setActiveTheoryMethod(m.id as 'lineal' | 'potencial')}
                   className={`px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex-shrink-0 flex items-center gap-2 border ${
                     activeTheoryMethod === m.id
                       ? m.isStar
@@ -252,7 +248,7 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
           </div>
 
           {/* ========================================================================= */}
-          {/* CASO C: AJUSTE POTENCIAL (OFICIAL DEL CASO 4 Y DEL APUNTE)               */}
+          {/* CASO: AJUSTE POTENCIAL (OFICIAL DEL CASO 4 Y DEL APUNTE)               */}
           {/* ========================================================================= */}
           {activeTheoryMethod === 'potencial' && (
             <div className="space-y-8 animate-fadeIn">
@@ -260,7 +256,7 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-4 flex-wrap">
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-100 flex items-center gap-2">
-                    <span className="text-blue-400 font-mono">c.</span> Ajuste de tipo Potencial
+                    <span className="text-blue-400 font-mono">b.</span> Ajuste de tipo Potencial
                   </h3>
                   <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-950/80 text-blue-300 border border-blue-700/50">
                     Ejemplo de Referencia de la Guía · n = 5
@@ -410,30 +406,69 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
                       Cálculo Detallado de Bondad del Ajuste (r²) del Ejemplo Teórico
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-400">
-                      Evaluación paso a paso de la Suma Total (ST), Suma de Residuos (SR) y Coeficiente de Determinación
+                      Ejemplo con los cinco datos de la guía: predicciones, residuos, variabilidad explicada y diagnóstico
                     </p>
                   </div>
                 </div>
 
                 <p className="text-slate-200 text-sm sm:text-base leading-relaxed">
-                  Según el apunte oficial, la bondad del ajuste se determina comparando la dispersión total de los datos respecto a la media (<strong className="text-slate-100">ST</strong>) con la suma de los residuos al cuadrado no explicados (<strong className="text-slate-100">SR</strong>):
+                  Para el ejemplo de la guía usamos los datos observados <InlineMath math="(x_i,y_i) = (1,0.5), (2,1.7), (3,3.4), (4,5.7), (5,8.4)" /> y el modelo potencial obtenido <InlineMath math="\hat{y}=0.5009\,x^{1.7517}" />. La bondad se evalúa en la escala original de <InlineMath math="y" />:
                 </p>
 
                 <div className="py-3 px-6 bg-[#141f30] rounded-xl border border-slate-700/60 text-center text-slate-100 text-lg sm:text-xl">
-                  <BlockMath math="r^2 = \frac{ST - SR}{ST} = 1 - \frac{SR}{ST}" />
+                  <BlockMath math="R^2 = 1 - \frac{SSE}{SST}" />
                 </div>
 
-                <div className="p-4 bg-[#141f30] rounded-xl border border-slate-700/60 text-xs sm:text-sm text-slate-300 space-y-1">
-                  <span className="font-semibold text-slate-100 block">1. Media aritmética de las observaciones (<InlineMath math="\bar{y}" />):</span>
-                  <div className="py-1">
-                    <InlineMath math="\bar{y} = \frac{\sum_{i=1}^n y_i}{n} = \frac{0.5 + 1.7 + 3.4 + 5.7 + 8.4}{5} = \frac{19.7000}{5} = 3.9400" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 bg-[#141f30] rounded-xl border border-slate-700/60 text-xs sm:text-sm text-slate-300 space-y-2">
+                    <span className="font-semibold text-slate-100 block">Paso 1 — Calcular los valores estimados</span>
+                    <p>Se reemplaza cada masa corporal en el modelo potencial:</p>
+                    <div className="py-1 text-center text-emerald-300">
+                      <InlineMath math="\hat{y}_i = 0.5009\,x_i^{1.7517}" />
+                    </div>
+                    <p>Para <InlineMath math="x=[1,2,3,4,5]" />, las predicciones son:</p>
+                    <div className="py-1 text-center text-slate-100">
+                      <InlineMath math="\hat{y}=[0.5009,\ 1.6869,\ 3.4321,\ 5.6810,\ 8.3981]" />
+                    </div>
                   </div>
+
+                  <div className="p-4 bg-[#141f30] rounded-xl border border-slate-700/60 text-xs sm:text-sm text-slate-300 space-y-2">
+                    <span className="font-semibold text-slate-100 block">Paso 2 — Calcular los residuos</span>
+                    <p>Se resta cada predicción al valor observado; el residuo expresa el error del modelo en ese dato:</p>
+                    <div className="py-1 text-center text-amber-300">
+                      <InlineMath math="e_i=y_i-\hat{y}_i" />
+                    </div>
+                    <div className="py-1 text-center text-slate-100">
+                      <InlineMath math="e=[-0.0009,\ 0.0131,\ -0.0321,\ 0.0190,\ 0.0019]" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-[#141f30] rounded-xl border border-slate-700/60 text-xs sm:text-sm text-slate-300 space-y-2">
+                  <span className="font-semibold text-slate-100 block">Paso 3 — Calcular la variabilidad total (SST)</span>
+                  <p>Primero se obtiene la media observada y luego se suma la distancia cuadrática de cada valor respecto de ella:</p>
+                  <div className="py-1 text-center">
+                    <InlineMath math="\bar{y}=\frac{0.5+1.7+3.4+5.7+8.4}{5}=3.9400" />
+                  </div>
+                  <div className="py-1 text-center text-blue-300">
+                    <InlineMath math="SST=\sum (y_i-\bar{y})^2=11.8336+5.0176+0.2916+3.0976+19.8916=40.1320" />
+                  </div>
+                  <p>La SST representa la variabilidad total de las observaciones alrededor de su media.</p>
+                </div>
+
+                <div className="p-4 bg-[#141f30] rounded-xl border border-slate-700/60 text-xs sm:text-sm text-slate-300 space-y-2">
+                  <span className="font-semibold text-slate-100 block">Paso 4 — Calcular la variabilidad no explicada (SSE)</span>
+                  <p>Se suman los residuos al cuadrado; esta es la parte de la variabilidad que el modelo no explica:</p>
+                  <div className="py-1 text-center text-rose-300">
+                    <InlineMath math="SSE=\sum (y_i-\hat{y}_i)^2=0.0000+0.0002+0.0010+0.0004+0.0000\approx0.0016" />
+                  </div>
+                  <p>El detalle por observación aparece en la tabla siguiente.</p>
                 </div>
 
                 {/* Tabla de Residuos punto por punto para el ejemplo teórico */}
                 <div className="space-y-2">
                   <span className="text-xs uppercase font-bold text-slate-300 tracking-wider block">
-                    2. Tabla Punto por Punto de Desvíos Cuadráticos y Residuos:
+                    Detalle punto por punto de desviaciones, predicciones y residuos:
                   </span>
                   <div className="bg-[#141f30] rounded-xl border border-[#334155] overflow-hidden">
                     <div className="overflow-x-auto">
@@ -520,13 +555,23 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
                 {/* Sustitución Final de r² */}
                 <div className="bg-[#141f30] p-5 sm:p-6 rounded-xl border border-emerald-700/50 space-y-3">
                   <span className="text-xs uppercase font-bold text-emerald-400 tracking-wider block">
-                    3. Sustitución Numérica del Coeficiente de Determinación (r²):
+                    Paso 5 — Calcular R²:
                   </span>
                   <div className="text-slate-100 text-lg sm:text-xl font-mono text-center py-2">
-                    <BlockMath math="r^2 = \frac{40.1320 - 0.0016}{40.1320} = \frac{40.1304}{40.1320} = 0.99996 \approx 1.0000 \quad (99.996\%)" />
+                    <BlockMath math="R^2=1-\frac{SSE}{SST}=1-\frac{0.0016}{40.1320}=0.99996\approx1.0000 \quad (99.996\%)" />
                   </div>
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed pt-2 border-t border-slate-700/60">
-                    <strong className="text-emerald-300">Evaluación en espacio logarítmico:</strong> Evaluando los residuos con las variables linealizadas <InlineMath math="\ln(y)" />, se tiene <InlineMath math="ST_{\ln} = 4.9573" />, <InlineMath math="SR_{\ln} = 0.0002" /> y <InlineMath math="r_{\ln}^2 = \frac{4.9573 - 0.0002}{4.9573} = 0.99996 \approx 1.0000" />. Un valor de <InlineMath math="r^2 \approx 1" /> con <InlineMath math="S_r = 0.0016" /> certifica que la función potencial reproduce con máxima exactitud la serie de datos del ejercicio de la guía.
+                    <strong className="text-emerald-300">Interpretación:</strong> en este ejemplo, el modelo explica aproximadamente el 99.996% de la variabilidad observada en la escala original de <InlineMath math="y" />.
+                  </p>
+                </div>
+
+                <div className="p-5 bg-[#141f30] rounded-xl border border-blue-800/50 space-y-3 text-sm text-slate-300">
+                  <span className="text-xs uppercase font-bold text-blue-300 tracking-wider block">Paso 6 — Comparar modelos y revisar residuos</span>
+                  <p>
+                    El modelo potencial obtiene <InlineMath math="R^2\approx0.99996" />, mientras que el ajuste lineal del mismo ejemplo obtiene <InlineMath math="R^2=0.9769" />. Además del valor de <InlineMath math="R^2" />, se inspecciona si los residuos son pequeños y quedan alrededor de cero sin un patrón sistemático: los residuos potenciales de la tabla son pequeños y de signos mixtos, mientras que en el análisis lineal se observa una forma de U.
+                  </p>
+                  <p className="text-slate-100 font-semibold">
+                    Por eso, la elección no se basa únicamente en maximizar <InlineMath math="R^2" />: se consideran conjuntamente la bondad del ajuste y el comportamiento de los residuos, que permite detectar estructura aún no explicada por el modelo.
                   </p>
                 </div>
               </div>

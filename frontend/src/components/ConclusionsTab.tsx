@@ -345,7 +345,6 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
             <thead>
               <tr className="bg-[#243147] border-b border-[#334155] text-slate-300 uppercase text-xs tracking-wider font-semibold">
                 <th className="p-4">Clúster</th>
-                <th className="p-4">Fisiología</th>
                 <th className="p-4">Ecuación Resultante</th>
                 <th className="p-4 text-center">Nivel Base (a)</th>
                 <th className="p-4 text-center">Exponente (b)</th>
@@ -359,11 +358,6 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
                   <td className="p-4 font-bold text-slate-100 flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full" style={{ backgroundColor: c.color }}></span>
                     {c.name}
-                  </td>
-                  <td className="p-4">
-                    <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold border ${c.badgeColor}`}>
-                      {c.type}
-                    </span>
                   </td>
                   <td className="p-4 font-mono text-slate-100 font-semibold text-xs md:text-sm whitespace-nowrap">
                     <InlineMath math={c.equation} />
