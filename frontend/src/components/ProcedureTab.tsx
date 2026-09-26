@@ -168,7 +168,7 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
             }`}
           >
             <Calculator className="w-5 h-5" />
-            <span>2. Ejemplo en Vivo (Clústeres TP)</span>
+            <span>2. Clústeres</span>
           </button>
 
           <button
@@ -344,6 +344,10 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
               </div>
 
               {/* Sistema Matricial Normalizado */}
+              <div className="py-3 px-6 bg-[#141f30] rounded-2xl border border-slate-700/60 text-center text-slate-100 text-base sm:text-lg">
+                  <BlockMath math={`\\begin{cases} n \\cdot a_0 + a_1 \\sum x_i = \\sum y_i \\\\[6pt] a_0 \\sum x_i + a_1 \\sum x_i^2 = \\sum (x_i \\cdot y_i) \\end{cases}`} />
+              </div>
+
               <div className="space-y-4">
                 <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
                   Se arma el sistema matricial normalizado 2×2 minimizando la suma de errores cuadráticos:

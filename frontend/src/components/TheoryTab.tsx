@@ -149,7 +149,7 @@ export const TheoryTab: React.FC = () => {
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <h3 className="text-xl sm:text-2xl font-bold text-slate-100 flex items-center gap-3">
               <Scale className="w-6 h-6 text-indigo-400" />
-              Compendio de Métodos de Ajuste por Mínimos Cuadrados
+              Métodos de Ajuste por Mínimos Cuadrados
             </h3>
             <span className="text-xs uppercase font-bold tracking-wider px-3 py-1 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-800/40">
               Marco Teórico y Puntos de Referencia
@@ -185,7 +185,7 @@ export const TheoryTab: React.FC = () => {
                 <InlineMath math="y = a_0 + a_1 x + a_2 x^2" />
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Extensión a grado 2. Sistema de Gauss 3×3. Aunque entrega un <InlineMath math="r^2" /> elevado por tener 3 parámetros libres, carece de fundamentación alométrica dimensional.
+                Mejora el (r^2), pero el término cuadrático no tiene una base biológica clara.
               </p>
             </div>
 
@@ -198,7 +198,7 @@ export const TheoryTab: React.FC = () => {
                   c. Potencial
                 </span>
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-900/80 text-blue-200 border border-blue-700/60">
-                  Modelo Oficial
+                  Modelo elegido
                 </span>
               </div>
               <div className="text-blue-300 text-lg font-bold font-mono py-1">
@@ -233,7 +233,7 @@ export const TheoryTab: React.FC = () => {
                 <InlineMath math="y = \frac{x}{a + b \cdot x} \quad \iff \quad \frac{1}{y} = a\left(\frac{1}{x}\right) + b" />
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Linealización mediante recíproco canónico (<InlineMath math="1/y" /> vs <InlineMath math="1/x" />). Es la ecuación clásica de Michaelis-Menten para cinéticas con techo o meseta de saturación (<InlineMath math="y \to 1/b" /> cuando <InlineMath math="x \to \infty" />). En leyes alométricas donde el metabolismo sigue creciendo, genera asíntotas verticales artificiales e <InlineMath math="r^2 < 0" />.
+                 En relaciones donde el metabolismo sigue creciendo, genera asíntotas verticales artificiales e <InlineMath math="r^2 < 0" />.
               </p>
             </div>
           </div>
