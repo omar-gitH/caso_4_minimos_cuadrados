@@ -460,9 +460,6 @@ export const ConclusionsTab: React.FC<ConclusionsTabProps> = ({ data }) => {
             <li>
               <strong>Restricción de superficie y calor:</strong> Un organismo tridimensional genera calor proporcional a su masa (<InlineMath math="L^3" />), pero disipa calor al ambiente a través de su piel (<InlineMath math="L^2" />). Una tasa lineal provocaría sobrecalentamiento mortal en animales grandes.
             </li>
-            <li>
-              <strong>Redes de distribución fractal:</strong> La ramificación del sistema vascular y respiratorio optimiza la entrega de nutrientes a todas las células con un exponente universal de <InlineMath math="3/4 = 0.75" />.
-            </li>
           </ol>
           <div className="p-4 bg-[#243147] rounded-xl border border-blue-800/40 shadow-xs text-blue-200 font-medium">
             En conclusión, la metodología de linealización logarítmica y resolución del sistema matricial normal de Gauss permitió capturar con máxima fidelidad la termodinámica del reino animal, demostrando la superioridad del modelo potencial frente a los modelos lineales o exponenciales.

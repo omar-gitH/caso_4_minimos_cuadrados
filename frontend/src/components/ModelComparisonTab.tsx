@@ -324,10 +324,10 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
           <div className="p-5 bg-[#243147] rounded-2xl border border-emerald-900/60 space-y-2 shadow-xs">
             <div className="flex items-center gap-2 text-emerald-300 font-bold text-sm sm:text-base">
               <CheckCircle className="w-5 h-5 text-emerald-400" />
-              1. Homocedasticidad (Modelo Potencial)
+              1. Modelo Potencial
             </div>
             <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              En la escala logarítmica <InlineMath math="\ln(y)" />, la dispersión residual es simétrica y de varianza uniforme, validando el teorema de Gauss-Markov. Es el único modelo con fundamento en las redes fractales de transporte biológico (Ley de Kleiber).
+              En la escala logarítmica <InlineMath math="\ln(y)" />, la dispersión residual es simétrica y de varianza uniforme. Es el único modelo que respeta la Ley de Kleiber.
             </p>
           </div>
 
@@ -337,7 +337,7 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
               2. Falla del Modelo Lineal
             </div>
             <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              La recta impone una ordenada al origen <InlineMath math="a_1 > 0" /> (gasto calórico con masa cero) y una pendiente constante. Los animales pesados dominan las sumatorias, provocando errores relativos inaceptables de más del <strong className="text-amber-400">10,000%</strong> en especies pequeñas.
+              En la recta los animales pesados dominan las sumatorias, provocando errores relativos inaceptables de más del <strong className="text-amber-400">10,000%</strong> en especies pequeñas.
             </p>
           </div>
 
@@ -347,27 +347,27 @@ export const ModelComparisonTab: React.FC<ModelComparisonTabProps> = ({ data }) 
               3. Inviabilidad Polinómica (Overfitting)
             </div>
             <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              Aunque la parábola de 2do orden incrementa <InlineMath math="r^2" /> gracias a un 3er parámetro libre (<InlineMath math="a_2" />), el término cuadrático resulta negativo (<InlineMath math="a_2 < 0" />). Esto predice que para animales grandes el metabolismo decrecería hasta volverse negativo (<InlineMath math="\lim_{x \to \infty} y = -\infty" />).
+              Aunque la parábola de 2do orden incrementa la bondad, <InlineMath math="r^2" /> gracias a un 3er parámetro, el término cuadrático resulta negativo (<InlineMath math="a_2 < 0" />). Esto predice que para animales grandes el metabolismo decrecería hasta volverse negativo (<InlineMath math="\lim_{x \to \infty} y = -\infty" />).
             </p>
           </div>
 
           <div className="p-5 bg-[#243147] rounded-2xl border border-rose-900/60 space-y-2 shadow-xs">
             <div className="flex items-center gap-2 text-rose-300 font-bold text-sm sm:text-base">
               <XCircle className="w-5 h-5 text-rose-400" />
-              4. Inviabilidad Exponencial (Pág. 7 y 8)
+              4. Inviabilidad Exponencial
             </div>
             <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              Evaluado según la Pág. 8 del apunte en <InlineMath math="\text{Ln}(y)" />, su coeficiente <InlineMath math="r^2 \approx 0.27 - 0.47" /> no supera el umbral de aceptación (<InlineMath math="r^2 > 0.85" />). En espacio real predice tasas térmicas que harían hervir los tejidos de animales grandes.
+               El coeficiente de bondad <InlineMath math="r^2 \approx 0.27 - 0.47" /> no supera el umbral de aceptación (<InlineMath math="r^2 > 0.85" />). 
             </p>
           </div>
 
           <div className="p-5 bg-[#243147] rounded-2xl border border-sky-900/60 space-y-2 shadow-xs md:col-span-2 lg:col-span-2">
             <div className="flex items-center gap-2 text-sky-300 font-bold text-sm sm:text-base">
               <XCircle className="w-5 h-5 text-sky-400" />
-              5. Incompatibilidad del Modelo del Cociente (Pág. 6-8)
+              5. Incompatibilidad del Modelo del Cociente 
             </div>
             <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              El ajuste del cociente linealizado por inversión <InlineMath math="1/y" /> es óptimo para cinéticas enzimáticas con saturación (Michaelis-Menten). Sin embargo, en alometría animal impone una cota máxima asintótica artificial (<InlineMath math="y \to a \approx 1-6 \text{ W}" />), cuando mamíferos y peces grandes alcanzan miles de Watts.
+              El ajuste del cociente linealizado por inversión impone una cota máxima asintótica artificial (<InlineMath math="y \to a \approx 1-6 \text{ W}" />), cuando mamíferos y peces grandes alcanzan miles de Watts.
             </p>
           </div>
         </div>
