@@ -416,7 +416,7 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
                 </p>
 
                 <div className="py-3 px-6 bg-[#141f30] rounded-xl border border-slate-700/60 text-center text-slate-100 text-lg sm:text-xl">
-                  <BlockMath math="R^2 = 1 - \frac{SSE}{SST}" />
+                  <BlockMath math="R^2 = 1 - \frac{SR}{ST}" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -445,22 +445,22 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
                 </div>
 
                 <div className="p-4 bg-[#141f30] rounded-xl border border-slate-700/60 text-xs sm:text-sm text-slate-300 space-y-2">
-                  <span className="font-semibold text-slate-100 block">Paso 3 — Calcular la variabilidad total (SST)</span>
+                  <span className="font-semibold text-slate-100 block">Paso 3 — Calcular la variabilidad total (ST)</span>
                   <p>Primero se obtiene la media observada y luego se suma la distancia cuadrática de cada valor respecto de ella:</p>
                   <div className="py-1 text-center">
                     <InlineMath math="\bar{y}=\frac{0.5+1.7+3.4+5.7+8.4}{5}=3.9400" />
                   </div>
                   <div className="py-1 text-center text-blue-300">
-                    <InlineMath math="SST=\sum (y_i-\bar{y})^2=11.8336+5.0176+0.2916+3.0976+19.8916=40.1320" />
+                    <InlineMath math="ST=\sum (y_i-\bar{y})^2=11.8336+5.0176+0.2916+3.0976+19.8916=40.1320" />
                   </div>
-                  <p>La SST representa la variabilidad total de las observaciones alrededor de su media.</p>
+                  <p>La ST representa la variabilidad total de las observaciones alrededor de su media.</p>
                 </div>
 
                 <div className="p-4 bg-[#141f30] rounded-xl border border-slate-700/60 text-xs sm:text-sm text-slate-300 space-y-2">
-                  <span className="font-semibold text-slate-100 block">Paso 4 — Calcular la variabilidad no explicada (SSE)</span>
+                  <span className="font-semibold text-slate-100 block">Paso 4 — Calcular la variabilidad no explicada (SR)</span>
                   <p>Se suman los residuos al cuadrado; esta es la parte de la variabilidad que el modelo no explica:</p>
                   <div className="py-1 text-center text-rose-300">
-                    <InlineMath math="SSE=\sum (y_i-\hat{y}_i)^2=0.0000+0.0002+0.0010+0.0004+0.0000\approx0.0016" />
+                    <InlineMath math="SR=\sum (y_i-\hat{y}_i)^2=0.0000+0.0002+0.0010+0.0004+0.0000\approx0.0016" />
                   </div>
                   <p>El detalle por observación aparece en la tabla siguiente.</p>
                 </div>
@@ -558,7 +558,7 @@ export const ProcedureTab: React.FC<ProcedureTabProps> = ({ data }) => {
                     Paso 5 — Calcular R²:
                   </span>
                   <div className="text-slate-100 text-lg sm:text-xl font-mono text-center py-2">
-                    <BlockMath math="R^2=1-\frac{SSE}{SST}=1-\frac{0.0016}{40.1320}=0.99996\approx1.0000 \quad (99.996\%)" />
+                    <BlockMath math="R^2=1-\frac{SR}{ST}=1-\frac{0.0016}{40.1320}=0.99996\approx1.0000 \quad (99.996\%)" />
                   </div>
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed pt-2 border-t border-slate-700/60">
                     <strong className="text-emerald-300">Interpretación:</strong> en este ejemplo, el modelo explica aproximadamente el 99.996% de la variabilidad observada en la escala original de <InlineMath math="y" />.
